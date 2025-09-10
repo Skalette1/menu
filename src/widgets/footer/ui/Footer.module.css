@@ -1,0 +1,207 @@
+.footer {
+  background: linear-gradient(135deg, #4a2c2a 0%, #3a241f 100%);
+  color: #f5d7b0;
+  padding: 40px 0 20px;
+  margin-top: auto;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d9a066;
+  margin: 0;
+  font-family: 'Georgia', serif;
+}
+
+.description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(217, 160, 102, 0.1);
+  border: 1px solid rgba(217, 160, 102, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.socialLink:hover {
+  background: #d9a066;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(217, 160, 102, 0.3);
+}
+
+.icon {
+  font-size: 1.1rem;
+}
+
+.linksSection {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.linksColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.columnTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #d9a066;
+  margin: 0 0 10px 0;
+}
+
+.link {
+  color: #f5d7b0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  opacity: 1;
+  color: #d9a066;
+  transform: translateX(5px);
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contactItem {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bottomSection {
+  margin-top: 30px;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(217, 160, 102, 0.3) 50%, 
+    transparent 100%);
+  margin-bottom: 20px;
+}
+
+.copyright {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.copyright p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.legalLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.legalLink {
+  color: #f5d7b0;
+  text-decoration: none;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.legalLink:hover {
+  opacity: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .linksSection {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .copyright {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .legalLinks {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 30px 0 15px;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+  }
+  
+  .socials {
+    justify-content: center;
+  }
+  
+  .legalLinks {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+}

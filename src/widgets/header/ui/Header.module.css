@@ -7,10 +7,12 @@ h1 {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 2rem;
   margin: 2rem 3rem;
 }
 
+.header img {
+  width: 100px;
+}
 .headerTop {
   display: flex;
   align-items: center;
@@ -37,6 +39,7 @@ h1 {
 .searchForm {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
   grid-area: search;
   width: 100%;
