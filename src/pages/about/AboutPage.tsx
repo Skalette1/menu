@@ -1,13 +1,13 @@
 import React from 'react'
 import { Header } from '../../widgets/header/ui/Header'
-import Map from '../../widgets/map/Map'
 import { Footer } from '../../widgets/footer/ui/Footer'
+import { Section } from '../../widgets/section/Section'
 
-export const Contact = () => {
+export const AboutPage = () => {
   return (
     <div>
       <Header />
-      <Map />
+      <Section />
       <Footer />
     </div>
   )

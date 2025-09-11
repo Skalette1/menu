@@ -9,7 +9,7 @@ export const Header = () => {
     <header className={styles.header}>
       <div className={styles.headerTop}>
       <Link to="/">
-      <img src={logo} alt="logo" />
+      <h1>Coffee <span style={{textDecoration: "underline"}}>shop</span></h1>
       </Link>
         <Navbar />
       </div>
@@ -17,4 +17,4 @@ export const Header = () => {
     </header>
   );
 }
-//
+//<img src={logo} alt="logo" />

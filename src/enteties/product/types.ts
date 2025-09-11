@@ -1,4 +1,4 @@
-export type Category = "drinks" | "desserts" | "hot" | "salads";
+export type Category = "напитки" | "десерты" | "горячее" | "салаты";
 
 export interface Product {
   id: string;

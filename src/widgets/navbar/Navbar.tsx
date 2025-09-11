@@ -4,8 +4,8 @@ export const Navbar = () => {
   return (
     <nav className={styles.nav}>
       <ul>
-        <li>О нас</li>
-        <li><Link to="/contacts">Контакты</Link></li>
+        <li><Link to="/about">О нас</Link></li>
+        <li><Link to="/contacts">Локации</Link></li>
       </ul>
     </nav>
   );

@@ -7,7 +7,7 @@ import type { Category } from '../../enteties/product/types'
 import { Footer } from '../../widgets/footer/ui/Footer'
 
 export const HomePage = () => {
-  const categories: Category[] = ["drinks", "desserts", "hot", "salads"];
+  const categories: Category[] = ["напитки", "десерты", "горячее", "салаты"];
 
   return (
     <main>

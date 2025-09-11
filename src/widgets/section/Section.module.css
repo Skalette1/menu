@@ -1,0 +1,44 @@
+.about {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 2.5rem;
+  color: #4a2c2a;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #7a4b2a;
+  margin-bottom: 40px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  font-size: 1.1rem;
+  color: #4a2c2a;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+@media (max-width: 700px) {
+  .about h2 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .content {
+    font-size: 1rem;
+  }
+}

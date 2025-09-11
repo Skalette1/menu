@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const RandomWheel: React.FC<Props> = ({ products, categories }) => {
-  const [category, setCategory] = useState<Category>("drinks");
+  const [category, setCategory] = useState<Category>("напитки");
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [selected, setSelected] = useState<Product | null>(null);
