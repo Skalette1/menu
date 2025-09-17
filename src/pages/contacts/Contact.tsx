@@ -1,14 +1,10 @@
 import React from 'react'
-import { Header } from '../../widgets/header/ui/Header'
 import Map from '../../widgets/map/Map'
-import { Footer } from '../../widgets/footer/ui/Footer'
 
 export const Contact = () => {
   return (
     <div>
-      <Header />
       <Map />
-      <Footer />
     </div>
   )
 }

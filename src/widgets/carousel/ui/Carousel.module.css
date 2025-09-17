@@ -1,0 +1,62 @@
+.carousel {
+  position: relative;
+  width: 100vw; /* на всю ширину экрана */
+  overflow: hidden;
+  height: 400px; /* фиксированная высота, можно менять */
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+  height: 100%;
+}
+
+.slide {
+  flex-shrink: 0;
+  width: 100vw; /* каждый слайд на всю ширину */
+  height: 100%;
+  position: relative;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* сохраняет пропорции и обрезает края при необходимости */
+}
+
+.slideText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  padding: 0 20px;
+  max-width: 90%;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background-color: #bbb;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dotActive {
+  background-color: #333;
+}
