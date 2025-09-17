@@ -66,7 +66,12 @@ export const Roulette: React.FC = () => {
 
   const handleAddToCart = () => {
     const drink = drinks[selected];
-    dispatch(addItem({ item: { id: drink.id, name: drink.name, img: drink.img, price: 250 }, count }));
+    dispatch(
+      addItem({
+        item: { id: drink.id, name: drink.name, img: drink.img, price: 250 },
+        count,
+      }),
+    );
   };
 
   return (
@@ -112,22 +117,37 @@ export const Roulette: React.FC = () => {
         ) : (
           <div className={styles.resultButtons}>
             <div className={styles.counter}>
-              <button onClick={() => setCount(Math.max(1, count - 1))} disabled={isSpinning} className={styles.decrement}>-</button>
+              <button
+                onClick={() => setCount(Math.max(1, count - 1))}
+                disabled={isSpinning}
+                className={styles.decrement}
+              >
+                -
+              </button>
               <span>{count}</span>
-              <button onClick={() => setCount(count + 1)} disabled={isSpinning} className={styles.increment}>+</button>
+              <button
+                onClick={() => setCount(count + 1)}
+                disabled={isSpinning}
+                className={styles.increment}
+              >
+                +
+              </button>
             </div>
             <div className={styles.resultActions}>
-            <Link to="/cart">
-            <button className={`${styles.cartBtn} ${styles.rouletBtn}`} onClick={handleAddToCart}>
-              <img src={cartPng} alt="Cart" />
-            </button>
-            </Link>
-            <button
-              className={`${styles.restartBtn} ${styles.rouletBtn}`}
-              onClick={handleRestart}
-            >
-              <img src={restartPng} alt="Restart" />
-            </button>
+              <Link to="/cart">
+                <button
+                  className={`${styles.cartBtn} ${styles.rouletBtn}`}
+                  onClick={handleAddToCart}
+                >
+                  <img src={cartPng} alt="Cart" />
+                </button>
+              </Link>
+              <button
+                className={`${styles.restartBtn} ${styles.rouletBtn}`}
+                onClick={handleRestart}
+              >
+                <img src={restartPng} alt="Restart" />
+              </button>
             </div>
           </div>
         )}

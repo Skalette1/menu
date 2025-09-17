@@ -17,8 +17,16 @@ export const HomePage = () => {
         <Carousel
           images={[
             { src: hamziPng, header: "HAMZI", text: "Кодим твой успех" },
-            { src: cheesCakePng, header: "HAMZI", text: "Попробуйте наши десерты" },
-            { src: saladPng, header: "HAMZI", text: "Свежие салаты каждый день" },
+            {
+              src: cheesCakePng,
+              header: "HAMZI",
+              text: "Попробуйте наши десерты",
+            },
+            {
+              src: saladPng,
+              header: "HAMZI",
+              text: "Свежие салаты каждый день",
+            },
           ]}
         />
       </div>

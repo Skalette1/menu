@@ -123,7 +123,7 @@
   padding: 0.9rem 2.6rem;
   font-size: 24px;
   color: #fff;
-  transition: .3s all ease-in-out;
+  transition: 0.3s all ease-in-out;
 }
 
 .rouletBtn img {
@@ -132,7 +132,7 @@
 }
 
 .counter {
-    font-family: 'GFS Didot', serif;
+  font-family: "GFS Didot", serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,14 +163,14 @@
 }
 
 .resultActions {
-    display: flex;
-    gap: 2rem;
+  display: flex;
+  gap: 2rem;
 }
 
 .restartBtn {
   display: flex;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
   border: none;
   border-radius: 8px;
   padding: 0.9rem 2.6rem;
@@ -185,7 +185,7 @@
 }
 
 .rouletBtn:hover {
-    background: #a1865b;
+  background: #a1865b;
 }
 
 .increment,
@@ -196,17 +196,17 @@
   font-size: 2.5rem;
   cursor: pointer;
   margin: 0 4px;
-  transition: .3s all ease-in-out;
+  transition: 0.3s all ease-in-out;
 }
 
 .increment:hover {
-    text-shadow: 3px 3px 15px rgba(54, 173, 76, 0.3);
-    color: #74ca80;
+  text-shadow: 3px 3px 15px rgba(54, 173, 76, 0.3);
+  color: #74ca80;
 }
 
 .decrement:hover {
-    text-shadow: 3px 3px 15px rgba(131, 16, 16, 0.3);
-    color: #9c2727;
+  text-shadow: 3px 3px 15px rgba(131, 16, 16, 0.3);
+  color: #9c2727;
 }
 
 @media (max-width: 600px) {

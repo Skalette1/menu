@@ -7,14 +7,16 @@
 }
 
 .counterBtn {
-  background: #AE9E7E;
+  background: #ae9e7e;
   border: none;
   border-radius: 8px;
   padding: 4px 14px;
   font-size: 1.5rem;
   color: #363d4a;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .counterBtn:hover {
@@ -38,7 +40,7 @@
   font-family: "Inter", sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 .tittleContainer {
@@ -99,7 +101,7 @@
 .list {
   flex: 1;
   margin-bottom: 24px;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .item {
@@ -109,7 +111,7 @@
   border-radius: 24px;
   padding: 16px;
   margin-bottom: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
 }
 
 .img {
@@ -124,7 +126,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: .2rem;
+  gap: 0.2rem;
 }
 
 .name {
@@ -137,7 +139,7 @@
 .calc {
   opacity: 0.8;
   font-size: 1.1rem;
-  color: #45494E;
+  color: #45494e;
 }
 
 .calc {
@@ -176,18 +178,18 @@
 }
 
 @media (max-width: 600px) {
-.img {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 18px;
-  margin-right: 18px;
-}
+  .img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 18px;
+    margin-right: 18px;
+  }
 
-.info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: .2rem;
-}
+  .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
 }
