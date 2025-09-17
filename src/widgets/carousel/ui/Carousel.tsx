@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Carousel.module.css";
 
 type CarouselProps = {
-  images: { src: string; text?: string }[]; // теперь можно передавать текст
+  images: { src: string; header: string;text?: string }[]; 
 };
 
 const Carousel: React.FC<CarouselProps> = ({ images }) => {
@@ -17,12 +17,12 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         {images.map((item, idx) => (
           <div key={idx} className={styles.slide}>
             <img src={item.src} alt={`slide-${idx}`} />
+            <h2 style={{fontFamily: "'Cormorant Garamond', serif", fontSize: "8rem", }} className={styles.slideHeader}>{item.header}</h2>
             {item.text && <div className={styles.slideText}>{item.text}</div>}
           </div>
         ))}
       </div>
 
-      {/* Пагинация */}
       <div className={styles.pagination}>
         {images.map((_, idx) => (
           <button

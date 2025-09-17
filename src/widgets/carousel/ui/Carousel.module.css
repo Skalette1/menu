@@ -1,8 +1,27 @@
+@import url('./CormorantGaramond.css');
+
+.sslideHeader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 90px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-align: center;
+  color: #fff;
+  margin: 0;
+  z-index: 2;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.7);
+}
+
 .carousel {
   position: relative;
-  width: 100vw; /* на всю ширину экрана */
+  width: 100vw; 
   overflow: hidden;
-  height: 400px; /* фиксированная высота, можно менять */
+  height: 600px; 
 }
 
 .slides {
@@ -13,7 +32,7 @@
 
 .slide {
   flex-shrink: 0;
-  width: 100vw; /* каждый слайд на всю ширину */
+  width: 100vw; 
   height: 100%;
   position: relative;
 }
@@ -21,7 +40,8 @@
 .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* сохраняет пропорции и обрезает края при необходимости */
+  object-fit: cover;
+  filter: brightness(40%);
 }
 
 .slideText {
@@ -30,8 +50,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 2rem;
-  font-weight: bold;
+  font-family: Montserrat Alternates, sans-serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 300;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
   text-align: center;
   padding: 0 20px;
@@ -59,4 +81,20 @@
 
 .dotActive {
   background-color: #333;
+}
+
+.slide h2 {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-family: Montserrat Alternates, sans-serif;
+  font-size: 4rem;
+  font-weight: 600;
+  font-style: SemiBold;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  z-index: 2;
+  margin: 0;
+  text-align: center;
 }

@@ -25,10 +25,10 @@
   height: 120px;
   background: linear-gradient(135deg, #f5d7b0 0%, #e6b17e 100%);
   border-radius: 0 0 30px 30px;
-  box-shadow: 
+  box-shadow:
     0 8px 20px rgba(122, 75, 42, 0.2),
-    inset -5px -5px 15px rgba(0,0,0,0.1),
-    inset 5px 5px 15px rgba(255,255,255,0.4);
+    inset -5px -5px 15px rgba(0, 0, 0, 0.1),
+    inset 5px 5px 15px rgba(255, 255, 255, 0.4);
 }
 
 .handle {
@@ -55,7 +55,7 @@
 }
 
 .coffee::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -5px;
   left: 0;
@@ -74,7 +74,9 @@
   gap: 8px;
 }
 
-.steam1, .steam2, .steam3 {
+.steam1,
+.steam2,
+.steam3 {
   width: 12px;
   height: 30px;
   background: rgba(255, 255, 255, 0.8);
@@ -95,7 +97,8 @@
 }
 
 @keyframes steamAnimation {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) scale(1);
     opacity: 0.6;
   }
@@ -139,7 +142,8 @@
   flex-wrap: wrap;
 }
 
-.homeButton, .menuButton {
+.homeButton,
+.menuButton {
   padding: 15px 25px;
   border-radius: 12px;
   text-decoration: none;
@@ -196,24 +200,24 @@
     text-align: center;
     gap: 40px;
   }
-  
+
   .title {
     font-size: 4rem;
   }
-  
+
   .subtitle {
     font-size: 1.5rem;
   }
-  
+
   .actions {
     justify-content: center;
   }
-  
+
   .cup {
     width: 120px;
     height: 100px;
   }
-  
+
   .handle {
     right: -25px;
     width: 50px;
@@ -226,20 +230,21 @@
   .title {
     font-size: 3rem;
   }
-  
+
   .subtitle {
     font-size: 1.2rem;
   }
-  
+
   .description {
     font-size: 1rem;
   }
-  
-  .homeButton, .menuButton {
+
+  .homeButton,
+  .menuButton {
     padding: 12px 20px;
     font-size: 0.9rem;
   }
-  
+
   .actions {
     flex-direction: column;
     align-items: center;

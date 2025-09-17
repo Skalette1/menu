@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -7,12 +6,12 @@
 
 :root {
   --brown-color: rgb(126, 73, 73);
-  --blue-color:  #015075;
+  --blue-color: #015075;
 }
 
 body {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  background-color: #eae7e7;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  /* background-color: #eae7e7; */
 }
 
 /* Глобальный стиль для скроллбара */
@@ -23,14 +22,20 @@ body {
 ::-webkit-scrollbar-track {
   background: #fff8f0; /* светлый фон трека */
   border-radius: 12px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgb(126, 73, 73), rgb(156, 93, 93)); /* градиент */
+  background: linear-gradient(
+    180deg,
+    rgb(126, 73, 73),
+    rgb(156, 93, 93)
+  ); /* градиент */
   border-radius: 12px;
   border: 4px solid #fff8f0; /* отступ вокруг ползунка */
-  transition: background 0.3s, transform 0.2s;
+  transition:
+    background 0.3s,
+    transform 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {

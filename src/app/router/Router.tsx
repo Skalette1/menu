@@ -7,6 +7,7 @@ import { DrinksPage } from "../../pages/drinksPage/ui/DrinksPage";
 import { HotPage } from "../../pages/hotPage/ui/HotPage";
 import { SaladsPage } from "../../pages/saladsPage/ui/SaladsPage";
 import { NotFound } from "../../pages/NotFoundPage/NotFoundPage";
+import { CartPage } from "../../pages/cart/CartPage";
 
 export const router = createHashRouter([
   {
@@ -36,6 +37,10 @@ export const router = createHashRouter([
   {
     path: "/salads",
     element: <SaladsPage />,
+  },
+  {
+    path: "/cart",
+    element: <CartPage />,
   },
   {
     path: "*",

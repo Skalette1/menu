@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./NotFound.module.css";
 
 export const NotFound = () => {
@@ -17,15 +17,15 @@ export const NotFound = () => {
             </div>
           </div>
         </div>
-        
+
         <div className={styles.textSection}>
           <h1 className={styles.title}>404</h1>
           <h2 className={styles.subtitle}>Ой! Страница уплыла как кофеин</h2>
           <p className={styles.description}>
-            Кажется, эта страница затерялась среди ароматных зерен. 
-            Но не переживайте - у нас есть много вкусного на главной!
+            Кажется, эта страница затерялась среди ароматных зерен. Но не
+            переживайте - у нас есть много вкусного на главной!
           </p>
-          
+
           <div className={styles.actions}>
             <Link to="/" className={styles.homeButton}>
               🏠 На главную

@@ -1,36 +1,41 @@
-/* Карусель */
 .carouselWrapper {
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto; /* вместо hidden */
   margin-bottom: 16px;
   display: flex;
   justify-content: center;
 }
+
 .carousel {
   display: flex;
   gap: 16px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 8px;
+  padding: 10px 16px 8px;
   width: 100%;
+  min-height: max-content;
   justify-content: center;
 }
+
 .drinkCard {
   background: #fff;
   border-radius: 16px;
   padding: 16px 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
   align-items: center;
   opacity: 0.7;
-  transition: opacity 0.2s, transform 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
 }
+
 .selectedCard {
   background: #fff;
   border-radius: 16px;
   padding: 16px 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,9 +43,10 @@
   transform: scale(1.1);
   z-index: 2;
 }
+
 .rouletteContainer {
   background: #8b6a4b;
-  border-radius: 24px;
+  border-radius: 24px 24px 0 0;
   padding: 24px 16px;
   width: 100vw;
   margin: 0 auto;
@@ -48,7 +54,7 @@
   flex-direction: column;
   align-items: center;
 }
-/* Центрированный заголовок и стрелка */
+
 .headerCentered {
   width: 100%;
   display: flex;
@@ -57,15 +63,24 @@
   justify-content: center;
   font-size: 32px;
   color: #fff;
-  font-family: 'GFS Didot', serif;
+  font-family: "GFS Didot", serif;
   font-weight: 400;
   margin-bottom: 12px;
 }
+
+.headerCentered h2 {
+  font-size: 2.6rem;
+  color: #fff;
+  font-family: "GFS Didot", serif;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
 .arrowCentered {
-  font-size: 24px;
+  font-size: 3rem;
   margin-top: 4px;
 }
-/* Карточка выбранного напитка */
+
 .selectedCard {
   display: flex;
   flex-direction: column;
@@ -74,50 +89,128 @@
   border-radius: 16px;
   padding: 16px 24px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
+
 .selectedImg {
-  width: 80px;
-  height: 80px;
+  max-width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 8px;
 }
+
 .selectedName {
   font-size: 20px;
   color: #8b6a4b;
   font-weight: 500;
   text-align: center;
 }
+
 .actionsCentered {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
 }
-.randomBtn, .cartBtn {
+
+.rouletBtn,
+.cartBtn {
+  cursor: pointer;
   background: #bfa37a;
   border: none;
   border-radius: 8px;
-  padding: 8px 16px;
+  padding: 0.9rem 2.6rem;
   font-size: 24px;
-  cursor: pointer;
   color: #fff;
+  transition: .3s all ease-in-out;
 }
+
+.rouletBtn img {
+  width: 30px;
+  height: 30px;
+}
+
 .counter {
+    font-family: 'GFS Didot', serif;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background: #bfa37a;
   border-radius: 8px;
   padding: 4px 12px;
   color: #fff;
-  font-size: 20px;
+  font-size: 3rem;
+  width: 150px;
 }
+
 .counter button {
   background: none;
   border: none;
   color: #fff;
-  font-size: 24px;
+  font-size: 2.5rem;
   cursor: pointer;
   margin: 0 4px;
+}
+
+.resultButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.resultActions {
+    display: flex;
+    gap: 2rem;
+}
+
+.restartBtn {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 2.6rem;
+  font-size: 24px;
+  color: #fff;
+}
+
+.restartBtn img {
+  width: 40px;
+  height: 34px;
+  transform: translate(3px, 3px);
+}
+
+.rouletBtn:hover {
+    background: #a1865b;
+}
+
+.increment,
+.decrement {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+  margin: 0 4px;
+  transition: .3s all ease-in-out;
+}
+
+.increment:hover {
+    text-shadow: 3px 3px 15px rgba(54, 173, 76, 0.3);
+    color: #74ca80;
+}
+
+.decrement:hover {
+    text-shadow: 3px 3px 15px rgba(131, 16, 16, 0.3);
+    color: #9c2727;
+}
+
+@media (max-width: 600px) {
+  .carousel {
+    justify-content: flex-start;
+  }
 }
