@@ -1,6 +1,6 @@
 .carouselWrapper {
   width: 100%;
-  overflow-x: auto; /* вместо hidden */
+  overflow-x: auto;
   margin-bottom: 16px;
   display: flex;
   justify-content: center;
@@ -45,7 +45,7 @@
 }
 
 .rouletteContainer {
-  background: #8b6a4b;
+  background: #2F3A4C;
   border-radius: 24px 24px 0 0;
   padding: 24px 16px;
   width: 100vw;

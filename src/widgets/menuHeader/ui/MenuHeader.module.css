@@ -1,0 +1,36 @@
+
+.menuHeader {
+  margin: 0;
+  transform: translateY(-25%);
+  padding: 1rem 2rem;
+  border-radius: 0 0 3rem 3rem;
+  background-color: #2F3A4C;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+}
+
+.line {
+  width: 100%;
+  max-width: 1200px; 
+  height: 3px;
+  background-color: #ffffff;
+  margin: 1rem 0;
+}
+
+.subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem; 
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+  margin: 0.5rem auto 0;
+}

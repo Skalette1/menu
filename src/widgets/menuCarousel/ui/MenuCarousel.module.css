@@ -1,0 +1,189 @@
+
+.container {
+  border-radius: 32px;
+  padding: 32px 24px;
+  max-width: 480px;
+  margin: 32px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2d3748;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.carouselWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 18px;
+}
+.arrowBtn {
+  background: #45494E;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  color: #2d3748;
+  cursor: pointer;
+  margin: 0 8px;
+  transition: background 0.2s, transform 0.2s;
+}
+.arrowBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.slide {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.slide img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
+.addBtn {
+  position: absolute;
+  right: 0px;
+  bottom: 0;
+  background: #2d3748;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: background 0.2s, transform 0.2s;
+  z-index: 2;
+}
+.addBtn.hide {
+  display: none !important;
+}
+.addBtn:hover {
+  background: #015075;
+  transform: scale(1.08);
+}
+.plusIcon {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.card {
+  background: #f8f8f8;
+  border-radius: 1.5rem 1.5rem 7rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 16px;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+/* Счетчик */
+.counterWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.counterBtn {
+  background: #e2e8f0;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 14px;
+  font-size: 1.3rem;
+  color: #2d3748;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.counterBtn:hover {
+  background: #cbd5e1;
+  transform: scale(1.1);
+}
+.counter {
+  font-size: 1.2rem;
+  font-weight: 500;
+  min-width: 28px;
+  text-align: center;
+  color: #2d3748;
+}
+
+.name {
+    font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 6px;
+  text-align: left;
+  margin-right: auto;
+  letter-spacing: 1px;
+}
+.price {
+    font-family: 'Inter', sans-serif;
+  margin-bottom: 8px;
+  text-align: left;
+  margin-right: auto;
+}
+.addBtn {
+  background: #2d3748;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background 0.2s, transform 0.2s;
+}
+.addBtn:hover {
+  background: #015075;
+  transform: scale(1.08);
+}
+.filters {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.filterBtn {
+  background: #C4B9A3;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 22px;
+  font-size: .9rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: #45494E;
+  cursor: pointer;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.filterBtn:hover {
+  background: #cbd5e1;
+  transform: scale(1.05);
+}
+.activeFilter {
+  background: #2d3748;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 8px 22px;
+  font-size: 1.1rem;
+}
