@@ -2,10 +2,7 @@ import { createHashRouter } from "react-router-dom";
 import { HomePage } from "../../pages/home/HomePage";
 import { Contact } from "../../pages/contacts/Contact";
 import { AboutPage } from "../../pages/about/AboutPage";
-import { DessertsPage } from "../../pages/dessertsPage/ui/DessertsPage";
-import { DrinksPage } from "../../pages/drinksPage/ui/DrinksPage";
-import { HotPage } from "../../pages/hotPage/ui/HotPage";
-import { SaladsPage } from "../../pages/saladsPage/ui/SaladsPage";
+import { MenuPage } from "../../pages/menu/ui/MenuPage";
 import { NotFound } from "../../pages/NotFoundPage/NotFoundPage";
 import { CartPage } from "../../pages/cart/CartPage";
 
@@ -24,19 +21,19 @@ export const router = createHashRouter([
   },
   {
     path: "/desserts",
-    element: <DessertsPage />,
+    element: <MenuPage category="desserts" />,
   },
   {
     path: "/drinks",
-    element: <DrinksPage />,
+    element: <MenuPage category="drinks" />,
   },
   {
     path: "/hot",
-    element: <HotPage />,
+    element: <MenuPage category="hot" />,
   },
   {
     path: "/salads",
-    element: <SaladsPage />,
+    element: <MenuPage category="salads" />,
   },
   {
     path: "/cart",

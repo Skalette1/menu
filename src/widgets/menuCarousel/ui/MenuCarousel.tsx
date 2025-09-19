@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 import rouletteCofe1 from '../../../../public/rouletteCofe1.png'
 import rouletteCofe2 from '../../../../public/rouletteCofe2.png'
 import rouletteCofe3 from '../../../../public/rouletteCofe3.png'
@@ -10,14 +11,23 @@ import saladPng from '../../../../public/salad2.png'
 import caesar from '../../../../public/caesar.webp'
 import arrowPng from '../../../../public/Arrow 1.png'
 import styles from "./MenuCarousel.module.css";
-import { useDispatch } from "react-redux";
-import { addItem } from "../../../shared/model/cartSlice";
+// removed unused redux imports - carousel manages its own local counts
 import ScrollToTopButton from "../../../shared/ui/scroll-to-top/ScrollToTopButton";
 import { GoToCartButton } from "../../../shared/ui/goToCartButton/GoToCartButton";
 
-const categories = ["Напитки", "Десерты", "Горячее", "Салаты"];
+type CategoryLabel = "Напитки" | "Десерты" | "Горячее" | "Салаты";
 
-const products = {
+const categories: CategoryLabel[] = ["Напитки", "Десерты", "Горячее", "Салаты"];
+
+const labelToPath: Record<string, string> = {
+  Напитки: "/drinks",
+  Десерты: "/desserts",
+  Горячее: "/hot",
+  Салаты: "/salads",
+};
+
+
+const products: Record<CategoryLabel, { id: number; name: string; img: string; price: number }[]> = {
   Напитки: [
     { id: 1, name: "Эспрессо", img: rouletteCofe2, price: 200 },
     { id: 2, name: "Американо", img: rouletteCofe3, price: 220 },
@@ -45,12 +55,27 @@ const products = {
 };
 
 export const MenuCarousel: React.FC = () => {
-  const [category, setCategory] = useState(categories[0]);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const initialCategory = React.useMemo(() => {
+    const path = location.pathname || '/';
+    const found = categories.find((c) => labelToPath[c] === path);
+    return found ?? categories[0];
+  }, [location.pathname]);
+
+  const [category, setCategory] = useState<CategoryLabel>(initialCategory as CategoryLabel);
   const [current, setCurrent] = useState(0);
   const [counts, setCounts] = useState<{[id:number]:number}>({});
-  const dispatch = useDispatch();
-  const items = products[category];
-  const slides = [];
+  // keep carousel category in sync when route changes (e.g. user navigates directly)
+  React.useEffect(() => {
+    const path = location.pathname || '/';
+    const found = categories.find((c) => labelToPath[c] === path) as CategoryLabel | undefined;
+    setCategory(found ?? categories[0]);
+    setCurrent(0);
+  }, [location.pathname]);
+  const items = products[category as CategoryLabel];
+  const slides = [] as typeof items[];
   for (let i = 0; i < items.length; i += 2) {
     slides.push(items.slice(i, i + 2));
   }
@@ -69,7 +94,7 @@ export const MenuCarousel: React.FC = () => {
           style={{transform: 'rotate(90deg)'}}/>
         </button>
         <div className={styles.slide}>
-          {slides[current].map((item) => (
+          {(slides[current] ?? []).map((item) => (
             <div key={item.id} className={styles.card}>
               <img src={item.img} alt={item.name} className={styles.img} />
               <div className={styles.name}>{item.name}</div>
@@ -129,6 +154,10 @@ export const MenuCarousel: React.FC = () => {
             key={cat}
             className={cat === category ? styles.activeFilter : styles.filterBtn}
             onClick={() => {
+              // navigate to corresponding route so MenuPage receives new category prop
+              const path = labelToPath[cat] ?? '/';
+              navigate(path);
+              // keep local carousel state in sync until route update
               setCategory(cat);
               setCurrent(0);
             }}
