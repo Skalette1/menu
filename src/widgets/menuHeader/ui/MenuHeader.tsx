@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from './MenuHeader.module.css'
+import React from "react";
+import styles from "./MenuHeader.module.css";
 
 export const MenuHeader = () => {
   return (
@@ -8,5 +8,5 @@ export const MenuHeader = () => {
       <div className={styles.line}></div>
       <p className={styles.subtitle}>Часто заказывают</p>
     </header>
-  )
-}
+  );
+};

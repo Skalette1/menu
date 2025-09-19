@@ -3,6 +3,7 @@ import { HomePage } from "../../pages/home/HomePage";
 import { Contact } from "../../pages/contacts/Contact";
 import { AboutPage } from "../../pages/about/AboutPage";
 import { MenuPage } from "../../pages/menu/ui/MenuPage";
+import DishDetailsPage from "../../pages/dish/DishDetailsPage";
 import { NotFound } from "../../pages/NotFoundPage/NotFoundPage";
 import { CartPage } from "../../pages/cart/CartPage";
 
@@ -38,6 +39,10 @@ export const router = createHashRouter([
   {
     path: "/cart",
     element: <CartPage />,
+  },
+  {
+    path: "/dish/:id",
+    element: <DishDetailsPage />,
   },
   {
     path: "*",

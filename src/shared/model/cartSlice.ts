@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export type CartItem = {
-  id: number;
+  id: string | number;
   name: string;
   img: string;
   price: number;
@@ -33,11 +33,15 @@ export const cartSlice = createSlice({
         state.items.push({ ...item, count });
       }
     },
-    removeItem: (state, action: PayloadAction<number>) => {
-      state.items = state.items.filter((i) => i.id !== action.payload);
+    removeItem: (state, action: PayloadAction<string | number>) => {
+      // allow string or number id in payload; filter using loose equality
+      state.items = state.items.filter((i) => i.id != action.payload);
     },
-    setCount: (state, action: PayloadAction<{ id: number; count: number }>) => {
-      const item = state.items.find((i) => i.id === action.payload.id);
+    setCount: (
+      state,
+      action: PayloadAction<{ id: string | number; count: number }>,
+    ) => {
+      const item = state.items.find((i) => i.id == action.payload.id);
       if (item) item.count = action.payload.count;
     },
     clearCart: (state) => {

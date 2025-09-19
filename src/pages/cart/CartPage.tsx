@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./CartPage.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../../shared/model/store";
-import { removeItem } from "../../shared/model/cartSlice";
+import { removeItem, setCount } from "../../shared/model/cartSlice";
 import trashPng from "../../../public/trash.png";
 import { Link } from "react-router-dom";
 
@@ -18,9 +18,8 @@ export const CartPage: React.FC = () => {
     0,
   );
 
-  const setCount = (payload: { id: number; count: number }) => {
-    dispatch({ type: "cart/setCount", payload });
-  };
+  // use setCount action creator from slice
+  // (we will dispatch setCount directly in button handlers below)
 
   return (
     <div className={styles.cartContainer}>

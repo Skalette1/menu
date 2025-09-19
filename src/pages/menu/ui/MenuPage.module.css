@@ -1,27 +1,26 @@
-
 .menu {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* изначально 4 колонки */
-    gap: 4rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* изначально 4 колонки */
+  gap: 4rem;
 }
 
 .menu img {
-    width: 100%;
-    height: 100%;
-    border-radius: 12px 12px 0 0;
-    display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px 12px 0 0;
+  display: block;
 }
 
 @media (max-width: 1200px) {
-    .menu {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
+  .menu {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
 }
 
 @media (max-width: 700px) {
-    .menu {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
+  .menu {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
