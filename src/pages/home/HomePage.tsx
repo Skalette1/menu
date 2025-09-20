@@ -5,7 +5,7 @@ import type { Category } from "../../enteties/product/types";
 import Carousel from "../../widgets/carousel/ui/Carousel";
 import hamziPng from "../../../public/8241813c95e331dc8a04bbefb3ff72c9 1@2x.png";
 import cheesCakePng from "../../../public/cheescake.jpg";
-import saladPng from "../../../public/salad.png";
+import saladPng from "../../../public/caesar.webp";
 import { Roulette } from "../../widgets/roulette/ui/Roulette";
 
 export const HomePage = () => {

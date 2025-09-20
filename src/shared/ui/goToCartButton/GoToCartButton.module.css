@@ -1,17 +1,15 @@
 .goToCartButton {
   background-color: #fff;
   font-family: "Roboto", sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.3rem; /* restored original size */
   font-weight: 500;
   color: #2f3a4c;
   text-decoration: none;
-  position: fixed;
-  bottom: 20px;
-  width: 100%;
+  width: 100%; /* full-width inside the wrapper */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem; /* restored original padding */
   border: 2px solid #2f3a4c;
   border-radius: 1.2rem;
   z-index: 1000;
@@ -28,4 +26,53 @@
   justify-content: center;
   font-size: 1.6rem;
   font-weight: 600;
+}
+
+.goToCartButtonWrapper {
+  position: fixed; /* keep fixed */
+  left: 0; /* full-width */
+  right: 0; /* full-width */
+  bottom: 20px; /* adjusted bottom */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center content */
+  padding: 0 12px; /* allow inner bar to show padding from edges */
+  box-sizing: border-box; /* ensure padding is included in width */
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: #2f3a4c;
+  font-size: 1.2rem;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+.closeButton:hover {
+  background: rgba(47,58,76,0.06);
+}
+
+.showButton {
+  position: fixed;
+  right: 10px;
+  bottom: 16px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: #2f3a4c;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  z-index: 1000;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.showButton:hover {
+  transform: scale(1.04);
 }

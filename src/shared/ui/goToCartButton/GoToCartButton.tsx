@@ -12,10 +12,51 @@ export const GoToCartButton: React.FC = () => {
       ) || 0,
   );
 
+  const [visible, setVisible] = React.useState<boolean>(() => {
+    try {
+      const v = localStorage.getItem("goToCartVisible");
+      return v === null ? true : v === "true";
+    } catch (e) {
+      return true;
+    }
+  });
+
+  React.useEffect(() => {
+    try {
+      localStorage.setItem("goToCartVisible", visible ? "true" : "false");
+    } catch (e) {
+      // ignore
+    }
+  }, [visible]);
+
+  if (!visible) {
+    return (
+      <button
+        className={styles.showButton}
+        aria-label="Показать корзину"
+        onClick={() => setVisible(true)}
+      >
+        🛒
+      </button>
+    );
+  }
+
   return (
-    <Link to="/cart" className={styles.goToCartButton}>
-      <p>Корзина</p>
-      <p className={styles.counterCart}>{count}</p>
-    </Link>
+    <div className={styles.goToCartButtonWrapper}>
+      <Link to="/cart" className={styles.goToCartButton}>
+        <p>Корзина</p>
+        <p className={styles.counterCart}>{count}</p>
+      </Link>
+      <button
+        className={styles.closeButton}
+        aria-label="Скрыть корзину"
+        onClick={(e) => {
+          e.preventDefault();
+          setVisible(false);
+        }}
+      >
+        ✕
+      </button>
+    </div>
   );
 };
