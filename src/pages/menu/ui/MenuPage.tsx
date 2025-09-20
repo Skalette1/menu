@@ -11,6 +11,7 @@ import type { RootState } from "../../../shared/model/store";
 import rouletteCofe1 from "../../../../public/rouletteCofe1.png";
 import rouletteCofe2 from "../../../../public/rouletteCofe2.png";
 import rouletteCofe3 from "../../../../public/rouletteCofe3.png";
+import cappucino from "../../../../public/cappucino.jpg";
 import cheesCakePng from "../../../../public/cheesecake-recipe.jpg";
 import tiramisuPng from "../../../../public/tiramisu.jpg";
 import rizottoPomidor from "../../../../public/risotto-al-pomodoro-e-basilico-260nw-2570085999.webp";
@@ -23,7 +24,7 @@ import { MenuCarousel } from "../../../widgets/menuCarousel/ui/MenuCarousel";
 const IMAGES: Record<string, string> = {
   d1: rouletteCofe2,
   d2: rouletteCofe3,
-  d3: rouletteCofe2,
+  d3: cappucino,
   d4: rouletteCofe1,
   ds1: cheesCakePng,
   ds2: tiramisuPng,

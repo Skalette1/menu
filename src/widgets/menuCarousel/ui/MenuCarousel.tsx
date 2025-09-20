@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import rouletteCofe1 from "../../../../public/rouletteCofe1.png";
 import rouletteCofe2 from "../../../../public/rouletteCofe2.png";
 import rouletteCofe3 from "../../../../public/rouletteCofe3.png";
+import cappucino from "../../../../public/cappucino.jpg";
 import cheesCakePng from "../../../../public/cheesecake-recipe.jpg";
 import tiramisuPng from "../../../../public/tiramisu.jpg";
 import rizottoPomidor from "../../../../public/risotto-al-pomodoro-e-basilico-260nw-2570085999.webp";
@@ -13,7 +14,6 @@ import arrowPng from "../../../../public/Arrow 1.png";
 import styles from "./MenuCarousel.module.css";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, setCount } from "../../../shared/model/cartSlice";
-// removed unused redux imports - carousel manages its own local counts
 import ScrollToTopButton from "../../../shared/ui/scroll-to-top/ScrollToTopButton";
 import { GoToCartButton } from "../../../shared/ui/goToCartButton/GoToCartButton";
 
@@ -35,7 +35,7 @@ const products: Record<
   Напитки: [
     { id: "d1", name: "Эспрессо", img: rouletteCofe2, price: 200 },
     { id: "d2", name: "Американо", img: rouletteCofe3, price: 220 },
-    { id: "d3", name: "Капучино", img: rouletteCofe2, price: 250 },
+    { id: "d3", name: "Капучино", img: cappucino, price: 250 },
     { id: "d4", name: "Латте", img: rouletteCofe1, price: 270 },
   ],
   Десерты: [

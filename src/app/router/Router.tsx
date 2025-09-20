@@ -1,7 +1,5 @@
 import { createHashRouter } from "react-router-dom";
 import { HomePage } from "../../pages/home/HomePage";
-import { Contact } from "../../pages/contacts/Contact";
-import { AboutPage } from "../../pages/about/AboutPage";
 import { MenuPage } from "../../pages/menu/ui/MenuPage";
 import DishDetailsPage from "../../pages/dish/DishDetailsPage";
 import { NotFound } from "../../pages/NotFoundPage/NotFoundPage";
@@ -11,14 +9,6 @@ export const router = createHashRouter([
   {
     path: "/",
     element: <HomePage />,
-  },
-  {
-    path: "/about",
-    element: <AboutPage />,
-  },
-  {
-    path: "/contacts",
-    element: <Contact />,
   },
   {
     path: "/desserts",
