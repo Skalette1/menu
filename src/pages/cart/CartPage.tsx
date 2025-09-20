@@ -18,9 +18,6 @@ export const CartPage: React.FC = () => {
     0,
   );
 
-  // use setCount action creator from slice
-  // (we will dispatch setCount directly in button handlers below)
-
   return (
     <div className={styles.cartContainer}>
       <div className={styles.tittleContainer}>
@@ -28,9 +25,7 @@ export const CartPage: React.FC = () => {
           ←
         </Link>
         <h1 className={styles.title}>Корзина</h1>
-        <div className={styles.lineLeft}></div>
       </div>
-      <div className={styles.line1}></div>
 
       <div className={styles.list}>
         {items.length === 0 ? (
@@ -74,7 +69,7 @@ export const CartPage: React.FC = () => {
                 className={styles.removeBtn}
                 onClick={() => dispatch(removeItem(item.id))}
               >
-                <img src={trashPng} alt="trash" />
+                <img src={trashPng} alt="trash" className={styles.trashImg}/>
               </button>
             </div>
           ))
@@ -82,9 +77,8 @@ export const CartPage: React.FC = () => {
       </div>
 
       <div className={styles.totalWrapper}>
-        <div className={styles.line2}></div>
         <div className={styles.total}>
-          <span>Итого:</span> {total}₽
+          <span style={{fontWeight: "900"}}>Итого:</span> {total}₽
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+
 .menuHeader {
   margin: 0;
   padding: 1rem 2rem;
@@ -6,7 +7,7 @@
   background-color: #2f3a4c;
   box-sizing: border-box;
   width: 100vw;
-  transform: translateY(-40.5%);
+  transform: translateY(-40.9%);
   /* position: fixed;
   top: 0;
   left: 0;
@@ -49,7 +50,7 @@
   .menuHeader {
     padding: 1rem;
     border-radius: 0 0 2rem 2rem;
-    transform: translateY(-35%);
+    transform: translateY(-35.5%);
   }
 
   .title {
