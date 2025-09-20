@@ -38,3 +38,36 @@
     width: 80%;
   }
 }
+
+/* Sticky top navigation for categories */
+.stickyNav {
+  position: sticky;
+  top: 0; /* sticks to top of viewport */
+  background: rgba(255, 255, 255, 0.95); /* slightly translucent background */
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 12px 8px;
+  z-index: 900; /* above page content but below fixed cart (1000) */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.menuContainer {
+  padding-bottom: 120px; /* provide space for fixed cart bar so content isn't hidden */
+}
+
+.filterBtn {
+  background: transparent;
+  border: 1px solid #2f3a4c;
+  color: #2f3a4c;
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+
+.activeFilter {
+  background: #2f3a4c;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #2f3a4c;
+}

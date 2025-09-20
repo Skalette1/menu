@@ -1,4 +1,4 @@
-import React from "react";
+// React import removed — using new JSX transform
 import { Link } from "react-router-dom";
 import styles from "./Menu.module.css";
 import { menuItems } from "../model/menu";

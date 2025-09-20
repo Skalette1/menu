@@ -15,7 +15,6 @@ import styles from "./MenuCarousel.module.css";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, setCount } from "../../../shared/model/cartSlice";
 import ScrollToTopButton from "../../../shared/ui/scroll-to-top/ScrollToTopButton";
-import { GoToCartButton } from "../../../shared/ui/goToCartButton/GoToCartButton";
 
 type CategoryLabel = "Напитки" | "Десерты" | "Горячее" | "Салаты";
 
@@ -210,26 +209,7 @@ export const MenuCarousel: React.FC = () => {
           />
         </button>
       </div>
-      <div className={styles.filters}>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={
-              cat === category ? styles.activeFilter : styles.filterBtn
-            }
-            onClick={() => {
-              // navigate to corresponding route so MenuPage receives new category prop
-              const path = labelToPath[cat] ?? "/";
-              navigate(path);
-              // keep local carousel state in sync until route update
-              setCategory(cat);
-              setCurrent(0);
-            }}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+      {/* filters moved to MenuPage sticky nav */}
       <ScrollToTopButton />
     </div>
   );

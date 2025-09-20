@@ -39,9 +39,7 @@
     transform 0.2s;
 }
 
-.arrowImg {
-  
-}
+/* arrowImg intentionally left out - img uses inline transform */
 
 .arrowBtn:disabled {
   opacity: 0.4;

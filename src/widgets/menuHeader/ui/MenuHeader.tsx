@@ -1,4 +1,4 @@
-import React from "react";
+// React import removed — using new JSX transform
 import styles from "./MenuHeader.module.css";
 
 export const MenuHeader = () => {

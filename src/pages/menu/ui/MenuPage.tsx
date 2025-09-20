@@ -20,6 +20,8 @@ import saladPng from "../../../../public/salad2.png";
 import caesar from "../../../../public/caesar.webp";
 import { MenuHeader } from "../../../widgets/menuHeader/ui/MenuHeader";
 import { MenuCarousel } from "../../../widgets/menuCarousel/ui/MenuCarousel";
+import { ScrollToTopPage } from "../../../shared/ui/scrollTopPage/ScrollTopPage";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const IMAGES: Record<string, string> = {
   d1: rouletteCofe2,
@@ -48,11 +50,32 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export const MenuPage: React.FC<{
-  category: "drinks" | "desserts" | "hot" | "salads";
+  category?: "drinks" | "desserts" | "hot" | "salads";
 }> = ({ category }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const [counts, setCounts] = React.useState<{ [id: string]: number }>({});
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // refs for category sections
+  const drinksRef = React.useRef<HTMLDivElement | null>(null);
+  const dessertsRef = React.useRef<HTMLDivElement | null>(null);
+  const hotRef = React.useRef<HTMLDivElement | null>(null);
+  const saladsRef = React.useRef<HTMLDivElement | null>(null);
+
+  const scrollToCategory = (cat: string) => {
+    const map: Record<string, React.RefObject<HTMLDivElement | null>> = {
+      drinks: drinksRef,
+      desserts: dessertsRef,
+      hot: hotRef,
+      salads: saladsRef,
+    };
+    const ref = map[cat];
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
   // initialize local counts from redux cart so UI shows correct numbers on mount
   React.useEffect(() => {
     const map: { [id: string]: number } = {};
@@ -62,78 +85,319 @@ export const MenuPage: React.FC<{
     setCounts(map);
   }, [cartItems]);
 
-  const filtered = PRODUCTS.filter((item) => item.category === category);
+  // when mounted, if category prop provided (via route) scroll to that section
+  React.useEffect(() => {
+    const cat = category;
+    if (cat) {
+      // small delay to ensure elements rendered
+      setTimeout(() => scrollToCategory(cat), 50);
+      return;
+    }
+    // if route path contains category (e.g. /drinks) map it
+    const path = location.pathname.replace("/", "");
+    if (path && ["drinks", "desserts", "hot", "salads"].includes(path)) {
+      setTimeout(() => scrollToCategory(path), 50);
+    }
+  }, [category, location.pathname]);
+
   return (
     <div className={styles.container}>
+      <ScrollToTopPage />
       <MenuHeader />
       <MenuCarousel />
-      <h2>{CATEGORY_LABELS[category]}</h2>
-      <div className={menuStyles.menu}>
-        {filtered.map((item) => (
-          <div
-            key={item.id}
-            className={styles.card}
-            onClick={() => (window.location.hash = `#/dish/${item.id}`)}
-          >
-            <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
-            <div className={styles.name}>{item.name}</div>
-            <div className={styles.price}>{item.price}₽</div>
-            {counts[item.id] && counts[item.id] > 0 ? (
-              <div className={styles.counterWrapper}>
-                <button
-                  className={styles.counterBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
 
-                    setCounts((c) => {
-                      const newCount = (c[item.id] || 1) - 1;
-                      if (newCount <= 0) {
-                        const copy = { ...c };
-                        delete copy[item.id];
-                        dispatch(removeItem(item.id));
-                        return copy;
-                      }
-                      dispatch(setCount({ id: item.id, count: newCount }));
-                      return { ...c, [item.id]: newCount };
-                    });
-                  }}
-                >
-                  -
-                </button>
-                <span className={styles.counter}>{counts[item.id]}</span>
-                <button
-                  className={styles.counterBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCounts((c) => {
-                      const newCount = (c[item.id] || 0) + 1;
-                      dispatch(setCount({ id: item.id, count: newCount }));
-                      return { ...c, [item.id]: newCount };
-                    });
-                  }}
-                >
-                  +
-                </button>
-              </div>
-            ) : (
-              <button
-                className={styles.addBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCounts((c) => ({ ...c, [item.id]: 1 }));
-                  dispatch(
-                    addItem({
-                      item: { ...item, img: IMAGES[item.id], id: item.id },
-                      count: 1,
-                    }),
-                  );
-                }}
+      {/* Top category navigation (moved filters from carousel) */}
+      <div className={menuStyles.stickyNav}>
+        <div className={styles.filters}>
+          {[
+            { id: "drinks", label: CATEGORY_LABELS.drinks },
+            { id: "desserts", label: CATEGORY_LABELS.desserts },
+            { id: "hot", label: CATEGORY_LABELS.hot },
+            { id: "salads", label: CATEGORY_LABELS.salads },
+          ].map((c) => (
+            <button
+              key={c.id}
+              className={c.id === (category ?? "") ? styles.activeFilter : styles.filterBtn}
+              onClick={() => {
+                navigate(`/${c.id}`);
+                setTimeout(() => scrollToCategory(c.id), 60);
+              }}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Full menu sections */}
+  <div className={menuStyles.menuContainer} style={{ maxWidth: 1100, margin: "0 auto", padding: 8 }}>
+        <section id="drinks" ref={drinksRef} style={{ marginBottom: 24 }}>
+          <h3>{CATEGORY_LABELS.drinks}</h3>
+          <div className={menuStyles.menu}>
+            {PRODUCTS.filter((p) => p.category === "drinks").map((item) => (
+              <div
+                key={item.id}
+                className={styles.card}
+                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
               >
-                <span className={styles.plusIcon}>+</span>
-              </button>
-            )}
+                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
+                <div className={styles.name}>{item.name}</div>
+                <div className={styles.price}>{item.price}₽</div>
+                {counts[item.id] && counts[item.id] > 0 ? (
+                  <div className={styles.counterWrapper}>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 1) - 1;
+                          if (newCount <= 0) {
+                            const copy = { ...c };
+                            delete copy[item.id];
+                            dispatch(removeItem(item.id));
+                            return copy;
+                          }
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      -
+                    </button>
+                    <span className={styles.counter}>{counts[item.id]}</span>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 0) + 1;
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className={styles.addBtn}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCounts((c) => ({ ...c, [item.id]: 1 }));
+                      dispatch(
+                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
+                      );
+                    }}
+                  >
+                    <span className={styles.plusIcon}>+</span>
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        </section>
+
+        <section id="desserts" ref={dessertsRef} style={{ marginBottom: 24 }}>
+          <h3>{CATEGORY_LABELS.desserts}</h3>
+          <div className={menuStyles.menu}>
+            {PRODUCTS.filter((p) => p.category === "desserts").map((item) => (
+              <div
+                key={item.id}
+                className={styles.card}
+                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
+              >
+                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
+                <div className={styles.name}>{item.name}</div>
+                <div className={styles.price}>{item.price}₽</div>
+                {counts[item.id] && counts[item.id] > 0 ? (
+                  <div className={styles.counterWrapper}>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 1) - 1;
+                          if (newCount <= 0) {
+                            const copy = { ...c };
+                            delete copy[item.id];
+                            dispatch(removeItem(item.id));
+                            return copy;
+                          }
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      -
+                    </button>
+                    <span className={styles.counter}>{counts[item.id]}</span>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 0) + 1;
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className={styles.addBtn}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCounts((c) => ({ ...c, [item.id]: 1 }));
+                      dispatch(
+                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
+                      );
+                    }}
+                  >
+                    <span className={styles.plusIcon}>+</span>
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="hot" ref={hotRef} style={{ marginBottom: 24 }}>
+          <h3>{CATEGORY_LABELS.hot}</h3>
+          <div className={menuStyles.menu}>
+            {PRODUCTS.filter((p) => p.category === "hot").map((item) => (
+              <div
+                key={item.id}
+                className={styles.card}
+                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
+              >
+                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
+                <div className={styles.name}>{item.name}</div>
+                <div className={styles.price}>{item.price}₽</div>
+                {counts[item.id] && counts[item.id] > 0 ? (
+                  <div className={styles.counterWrapper}>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 1) - 1;
+                          if (newCount <= 0) {
+                            const copy = { ...c };
+                            delete copy[item.id];
+                            dispatch(removeItem(item.id));
+                            return copy;
+                          }
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      -
+                    </button>
+                    <span className={styles.counter}>{counts[item.id]}</span>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 0) + 1;
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className={styles.addBtn}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCounts((c) => ({ ...c, [item.id]: 1 }));
+                      dispatch(
+                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
+                      );
+                    }}
+                  >
+                    <span className={styles.plusIcon}>+</span>
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="salads" ref={saladsRef} style={{ marginBottom: 24 }}>
+          <h3>{CATEGORY_LABELS.salads}</h3>
+          <div className={menuStyles.menu}>
+            {PRODUCTS.filter((p) => p.category === "salads").map((item) => (
+              <div
+                key={item.id}
+                className={styles.card}
+                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
+              >
+                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
+                <div className={styles.name}>{item.name}</div>
+                <div className={styles.price}>{item.price}₽</div>
+                {counts[item.id] && counts[item.id] > 0 ? (
+                  <div className={styles.counterWrapper}>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 1) - 1;
+                          if (newCount <= 0) {
+                            const copy = { ...c };
+                            delete copy[item.id];
+                            dispatch(removeItem(item.id));
+                            return copy;
+                          }
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      -
+                    </button>
+                    <span className={styles.counter}>{counts[item.id]}</span>
+                    <button
+                      className={styles.counterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 0) + 1;
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className={styles.addBtn}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCounts((c) => ({ ...c, [item.id]: 1 }));
+                      dispatch(
+                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
+                      );
+                    }}
+                  >
+                    <span className={styles.plusIcon}>+</span>
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
       <GoToCartButton />
       <ScrollToTopButton />
