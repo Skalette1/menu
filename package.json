@@ -16,7 +16,11 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
+    "antd": "^5.27.4",
+    "craco-less": "^3.0.1",
     "leaflet": "^1.9.4",
+    "less": "^4.4.1",
+    "less-loader": "^12.3.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-leaflet": "^5.0.0",
