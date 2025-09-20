@@ -127,6 +127,9 @@
   transition:
     background 0.2s,
     transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .counterBtn:hover {
   background: #cbd5e1;
