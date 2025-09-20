@@ -24,3 +24,15 @@
     gap: 1.5rem;
   }
 }
+
+@media (max-width: 400px) {
+  .menu {
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .card img {
+    height: auto;
+    width: 80%;
+  }
+}

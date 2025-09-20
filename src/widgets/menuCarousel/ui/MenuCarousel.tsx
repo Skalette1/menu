@@ -103,6 +103,7 @@ export const MenuCarousel: React.FC = () => {
         >
           <img
             src={arrowPng}
+            className={styles.arrowImg}
             alt="next"
             style={{ transform: "rotate(90deg)" }}
           />
