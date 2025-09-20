@@ -5,6 +5,7 @@ import type { RootState } from "../../shared/model/store";
 import { removeItem, setCount } from "../../shared/model/cartSlice";
 import trashPng from "../../../public/trash.png";
 import { Link } from "react-router-dom";
+import { ScrollToTopPage } from "../../shared/ui/scrollTopPage/ScrollTopPage";
 
 export const CartPage: React.FC = () => {
   const items = useSelector(
@@ -20,6 +21,7 @@ export const CartPage: React.FC = () => {
 
   return (
     <div className={styles.cartContainer}>
+      <ScrollToTopPage />
       <div className={styles.tittleContainer}>
         <Link to="/" className={styles.arrowToHome}>
           ←

@@ -200,3 +200,30 @@
     margin: 1.2rem 0 0.8rem 0;
   }
 }
+
+
+/* // */
+.addBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2f3a4c;
+  color: #fff;
+  display: flex;              /* центрируем содержимое */
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;          /* размер самого "+" */
+  line-height: 1;             /* убираем лишний отступ */
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.addBtn:hover {
+  transform: scale(1.1);
+}
+
+.plusIcon {
+  display: block;
+  line-height: 1;             /* чтобы символ "+" не «прыгал» */
+}
