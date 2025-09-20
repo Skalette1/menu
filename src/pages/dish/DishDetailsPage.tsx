@@ -14,6 +14,7 @@ import rizottoPomidor from "../../../public/risotto-al-pomodoro-e-basilico-260nw
 import rizotto from "../../../public/rizotto.png";
 import saladPng from "../../../public/salad2.png";
 import caesar from "../../../public/caesar.webp";
+import { ScrollToTopPage } from "../../shared/ui/scrollTopPage/ScrollTopPage";
 
 export const DishDetailsPage: React.FC = () => {
   const { id } = useParams();
@@ -54,6 +55,7 @@ export const DishDetailsPage: React.FC = () => {
 
   return (
     <div className={styles.page}>
+      <ScrollToTopPage />
       <button onClick={() => navigate(-1)} className={styles.back}>
         ←
       </button>

@@ -19,6 +19,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  gap: 2rem;
   margin-bottom: 18px;
 }
 .arrowBtn {
@@ -51,6 +52,7 @@
   justify-content: center;
   align-items: stretch;
   width: 100%;
+  width: 420px;
 }
 
 .slide img {
@@ -213,6 +215,7 @@
     padding: 18px;
   }
   .slide {
+    max-width: 430px;
     gap: 14px;
   }
   .card {
