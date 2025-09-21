@@ -50,11 +50,11 @@
   .menuHeader {
     padding: 1rem;
     border-radius: 0 0 2rem 2rem;
-    transform: translateY(-35.5%);
+    transform: translateY(-35.6%);
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 32px;
   }
 
   .line {
@@ -63,7 +63,7 @@
   }
 
   .subtitle {
-    font-size: 1.5rem;
+    font-size: 24px;
     margin: 0.25rem auto 0;
   }
 }

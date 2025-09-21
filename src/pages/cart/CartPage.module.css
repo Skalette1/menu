@@ -197,11 +197,15 @@
   }
   
   .title {
-    font-size: 32px;
+    font-size: 30px;
   }
   
   .arrowToHome {
     font-size: 1.8rem;
     transform: scale(1.6);
+  }
+
+  .total {
+    font-size: 20px;
   }
 }
