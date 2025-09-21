@@ -368,11 +368,12 @@
 
 @media (max-width: 480px) {
   .rouletteContainer {
+    margin: 0 auto;
     padding: 14px 8px;
   }
   
   .headerCentered h2 {
-    font-size: 1.6rem;
+    font-size: 36px;
     letter-spacing: 0.5px;
   }
   
@@ -417,7 +418,6 @@
   
   .resultActions {
     gap: 1rem;
-    flex-direction: column;
     align-items: center;
   }
   

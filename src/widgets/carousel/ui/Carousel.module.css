@@ -103,25 +103,6 @@
   text-align: center;
 }
 
-@media (max-width: 768px) {
-  .carousel {
-  height: 450px;
-}
-
-.slide h2 {
-  font-size: 84px;
-}
-
-  .slideHeader {
-    font-size: 50px;
-    margin-bottom: 0.2rem;
-  }
-
-  .slideText {
-    font-size: 24px;
-    margin-top: 2rem;
-  }
-}
 
 .imgContainer {
   position: absolute;
@@ -139,4 +120,23 @@
   height: 40px;
   width: 40px;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .carousel {
+  height: 450px;
+}
+
+.slide h2 {
+  font-size: 84px;
+}
+
+  .slideHeader {
+    margin-bottom: 0.2rem;
+  }
+
+  .slideText {
+    font-size: 20px;
+    margin-top: 2.3rem;
+  }
 }
