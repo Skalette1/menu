@@ -1,7 +1,6 @@
 import React from "react";
 import { PRODUCTS } from "../model/menuPage";
-import styles from "../../../widgets/menuCarousel/ui/MenuCarousel.module.css";
-import menuStyles from "./MenuPage.module.css";
+import styles from "./MenuPage.module.css";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, setCount } from "../../../shared/model/cartSlice";
 import { GoToCartButton } from "../../../shared/ui/goToCartButton/GoToCartButton";
@@ -49,6 +48,71 @@ const CATEGORY_LABELS: Record<string, string> = {
   salads: "Салаты",
 };
 
+// Компонент для кнопок (общий для всех карточек)
+const MenuCardControls: React.FC<{
+  item: any;
+  counts: { [id: string]: number };
+  setCounts: React.Dispatch<React.SetStateAction<{ [id: string]: number }>>;
+  dispatch: any;
+}> = ({ item, counts, setCounts, dispatch }) => {
+  const isInCart = counts[item.id] && counts[item.id] > 0;
+
+  if (!isInCart) {
+    return (
+      <button
+        className={styles.menuAddBtn}
+        onClick={(e) => {
+          e.stopPropagation();
+          setCounts((c) => ({ ...c, [item.id]: 1 }));
+          dispatch(
+            addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
+          );
+        }}
+      >
+        <span className={styles.menuPlusIcon}>+</span>
+      </button>
+    );
+  }
+
+  return (
+    <div className={styles.menuCounterWrapper}>
+      <button
+        className={styles.menuCounterBtn}
+        onClick={(e) => {
+          e.stopPropagation();
+          setCounts((c) => {
+            const newCount = (c[item.id] || 1) - 1;
+            if (newCount <= 0) {
+              const copy = { ...c };
+              delete copy[item.id];
+              dispatch(removeItem(item.id));
+              return copy;
+            }
+            dispatch(setCount({ id: item.id, count: newCount }));
+            return { ...c, [item.id]: newCount };
+          });
+        }}
+      >
+        -
+      </button>
+      <span className={styles.menuCounter}>{counts[item.id]}</span>
+      <button
+        className={styles.menuCounterBtn}
+        onClick={(e) => {
+          e.stopPropagation();
+          setCounts((c) => {
+            const newCount = (c[item.id] || 0) + 1;
+            dispatch(setCount({ id: item.id, count: newCount }));
+            return { ...c, [item.id]: newCount };
+          });
+        }}
+      >
+        +
+      </button>
+    </div>
+  );
+};
+
 export const MenuPage: React.FC<{
   category?: "drinks" | "desserts" | "hot" | "salads";
 }> = ({ category }) => {
@@ -76,6 +140,7 @@ export const MenuPage: React.FC<{
       ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+
   // initialize local counts from redux cart so UI shows correct numbers on mount
   React.useEffect(() => {
     const map: { [id: string]: number } = {};
@@ -100,6 +165,34 @@ export const MenuPage: React.FC<{
     }
   }, [category, location.pathname]);
 
+  // Функция для рендера карточек (DRY принцип)
+  const renderMenuCards = (category: string) => (
+    <div className={styles.menu}>
+      {PRODUCTS.filter((p) => p.category === category).map((item) => (
+        <div
+          key={item.id}
+          className={styles.menuCard}
+          onClick={() => (window.location.hash = `#/dish/${item.id}`)}
+        >
+          <div className={styles.menuImgWrapper}>
+            <img src={IMAGES[item.id]} alt={item.name} className={styles.menuImg} />
+          </div>
+
+          <div className={styles.menuName}>{item.name}</div>
+          <div className={styles.menuPrice}>{item.price}₽</div>
+          
+          {/* Используем общий компонент для кнопок */}
+          <MenuCardControls 
+            item={item} 
+            counts={counts} 
+            setCounts={setCounts} 
+            dispatch={dispatch} 
+          />
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className={styles.container}>
       <ScrollToTopPage />
@@ -107,7 +200,7 @@ export const MenuPage: React.FC<{
       <MenuCarousel />
 
       {/* Top category navigation (moved filters from carousel) */}
-      <div className={menuStyles.stickyNav}>
+      <div className={styles.stickyNav}>
         <div className={styles.filters}>
           {[
             { id: "drinks", label: CATEGORY_LABELS.drinks },
@@ -130,273 +223,25 @@ export const MenuPage: React.FC<{
       </div>
 
       {/* Full menu sections */}
-  <div className={menuStyles.menuContainer} style={{ maxWidth: 1100, margin: "0 auto", padding: 8 }}>
+      <div className={styles.menuContainer} style={{ maxWidth: 1100, margin: "0 auto", padding: 8 }}>
         <section id="drinks" ref={drinksRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.drinks}</h3>
-          <div className={menuStyles.menu}>
-            {PRODUCTS.filter((p) => p.category === "drinks").map((item) => (
-              <div
-                key={item.id}
-                className={styles.card}
-                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
-              >
-                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
-                <div className={styles.name}>{item.name}</div>
-                <div className={styles.price}>{item.price}₽</div>
-                {counts[item.id] && counts[item.id] > 0 ? (
-                  <div className={styles.counterWrapper}>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 1) - 1;
-                          if (newCount <= 0) {
-                            const copy = { ...c };
-                            delete copy[item.id];
-                            dispatch(removeItem(item.id));
-                            return copy;
-                          }
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      -
-                    </button>
-                    <span className={styles.counter}>{counts[item.id]}</span>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 0) + 1;
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    className={styles.addBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCounts((c) => ({ ...c, [item.id]: 1 }));
-                      dispatch(
-                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
-                      );
-                    }}
-                  >
-                    <span className={styles.plusIcon}>+</span>
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+          {renderMenuCards("drinks")}
         </section>
 
         <section id="desserts" ref={dessertsRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.desserts}</h3>
-          <div className={menuStyles.menu}>
-            {PRODUCTS.filter((p) => p.category === "desserts").map((item) => (
-              <div
-                key={item.id}
-                className={styles.card}
-                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
-              >
-                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
-                <div className={styles.name}>{item.name}</div>
-                <div className={styles.price}>{item.price}₽</div>
-                {counts[item.id] && counts[item.id] > 0 ? (
-                  <div className={styles.counterWrapper}>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 1) - 1;
-                          if (newCount <= 0) {
-                            const copy = { ...c };
-                            delete copy[item.id];
-                            dispatch(removeItem(item.id));
-                            return copy;
-                          }
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      -
-                    </button>
-                    <span className={styles.counter}>{counts[item.id]}</span>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 0) + 1;
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    className={styles.addBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCounts((c) => ({ ...c, [item.id]: 1 }));
-                      dispatch(
-                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
-                      );
-                    }}
-                  >
-                    <span className={styles.plusIcon}>+</span>
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+          {renderMenuCards("desserts")}
         </section>
 
         <section id="hot" ref={hotRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.hot}</h3>
-          <div className={menuStyles.menu}>
-            {PRODUCTS.filter((p) => p.category === "hot").map((item) => (
-              <div
-                key={item.id}
-                className={styles.card}
-                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
-              >
-                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
-                <div className={styles.name}>{item.name}</div>
-                <div className={styles.price}>{item.price}₽</div>
-                {counts[item.id] && counts[item.id] > 0 ? (
-                  <div className={styles.counterWrapper}>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 1) - 1;
-                          if (newCount <= 0) {
-                            const copy = { ...c };
-                            delete copy[item.id];
-                            dispatch(removeItem(item.id));
-                            return copy;
-                          }
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      -
-                    </button>
-                    <span className={styles.counter}>{counts[item.id]}</span>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 0) + 1;
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    className={styles.addBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCounts((c) => ({ ...c, [item.id]: 1 }));
-                      dispatch(
-                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
-                      );
-                    }}
-                  >
-                    <span className={styles.plusIcon}>+</span>
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+          {renderMenuCards("hot")}
         </section>
 
         <section id="salads" ref={saladsRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.salads}</h3>
-          <div className={menuStyles.menu}>
-            {PRODUCTS.filter((p) => p.category === "salads").map((item) => (
-              <div
-                key={item.id}
-                className={styles.card}
-                onClick={() => (window.location.hash = `#/dish/${item.id}`)}
-              >
-                <img src={IMAGES[item.id]} alt={item.name} className={styles.img} />
-                <div className={styles.name}>{item.name}</div>
-                <div className={styles.price}>{item.price}₽</div>
-                {counts[item.id] && counts[item.id] > 0 ? (
-                  <div className={styles.counterWrapper}>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 1) - 1;
-                          if (newCount <= 0) {
-                            const copy = { ...c };
-                            delete copy[item.id];
-                            dispatch(removeItem(item.id));
-                            return copy;
-                          }
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      -
-                    </button>
-                    <span className={styles.counter}>{counts[item.id]}</span>
-                    <button
-                      className={styles.counterBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCounts((c) => {
-                          const newCount = (c[item.id] || 0) + 1;
-                          dispatch(setCount({ id: item.id, count: newCount }));
-                          return { ...c, [item.id]: newCount };
-                        });
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    className={styles.addBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCounts((c) => ({ ...c, [item.id]: 1 }));
-                      dispatch(
-                        addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
-                      );
-                    }}
-                  >
-                    <span className={styles.plusIcon}>+</span>
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+          {renderMenuCards("salads")}
         </section>
       </div>
       <GoToCartButton />

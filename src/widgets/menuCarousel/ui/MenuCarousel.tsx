@@ -66,39 +66,64 @@ export const MenuCarousel: React.FC = () => {
               className={styles.carouselCard}
               onClick={() => navigate(`/dish/${item.id}`)}
             >
-              <img src={item.img} alt={item.name} className={styles.img} />
-              <div className={styles.name}>{item.name}</div>
-              <div className={styles.price}>{item.price}₽</div>
-              {counts[item.id] && counts[item.id] > 0 ? (
-                <div className={styles.counterWrapper}>
+              <img src={item.img} alt={item.name} className={styles.carouselImg} />
+              <div className={styles.carouselName}>{item.name}</div>
+              <div className={styles.carouselPrice}>{item.price}₽</div>
+
+              {/* 🔽 Всегда прижимаем кнопку/счётчик вниз */}
+              <div className={styles.carouselBottom}>
+                {counts[item.id] && counts[item.id] > 0 ? (
+                  <div className={styles.carouselCounterWrapper}>
+                    <button
+                      className={styles.carouselCounterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => {
+                          const newCount = (c[item.id] || 1) - 1;
+                          if (newCount <= 0) {
+                            const copy = { ...c };
+                            delete copy[item.id];
+                            dispatch(removeItem(item.id));
+                            return copy;
+                          }
+                          dispatch(setCount({ id: item.id, count: newCount }));
+                          return { ...c, [item.id]: newCount };
+                        });
+                      }}
+                    >
+                      -
+                    </button>
+                    <span className={styles.carouselCounter}>{counts[item.id]}</span>
+                    <button
+                      className={styles.carouselCounterBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCounts((c) => ({
+                          ...c,
+                          [item.id]: (c[item.id] || 0) + 1,
+                        }));
+                        dispatch(
+                          addItem({
+                            item: {
+                              id: item.id,
+                              name: item.name,
+                              img: item.img,
+                              price: item.price,
+                            },
+                            count: 1,
+                          }),
+                        );
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
                   <button
-                    className={styles.counterBtn}
+                    className={styles.carouselAddBtn}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setCounts((c) => {
-                        const newCount = (c[item.id] || 1) - 1;
-                        if (newCount <= 0) {
-                          const copy = { ...c };
-                          delete copy[item.id];
-                          dispatch(removeItem(item.id));
-                          return copy;
-                        }
-                        dispatch(setCount({ id: item.id, count: newCount }));
-                        return { ...c, [item.id]: newCount };
-                      });
-                    }}
-                  >
-                    -
-                  </button>
-                  <span className={styles.counter}>{counts[item.id]}</span>
-                  <button
-                    className={styles.counterBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCounts((c) => ({
-                        ...c,
-                        [item.id]: (c[item.id] || 0) + 1,
-                      }));
+                      setCounts((c) => ({ ...c, [item.id]: 1 }));
                       dispatch(
                         addItem({
                           item: {
@@ -112,38 +137,20 @@ export const MenuCarousel: React.FC = () => {
                       );
                     }}
                   >
-                    +
+                    <span className={styles.carouselPlusIcon}>+</span>
                   </button>
-                </div>
-              ) : (
-                <button
-                  className={styles.addBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCounts((c) => ({ ...c, [item.id]: 1 }));
-                    dispatch(
-                      addItem({
-                        item: {
-                          id: item.id,
-                          name: item.name,
-                          img: item.img,
-                          price: item.price,
-                        },
-                        count: 1,
-                      }),
-                    );
-                  }}
-                >
-                  <span className={styles.plusIcon}>+</span>
-                </button>
-              )}
+                )}
+              </div>
+              {/* 🔼 Конец блока */}
             </div>
           ))}
         </div>
 
         <button
           className={styles.carouselArrow}
-          onClick={() => setCurrent(Math.min(slides.length - 1, current + 1))}
+          onClick={() =>
+            setCurrent(Math.min(slides.length - 1, current + 1))
+          }
           disabled={current === slides.length - 1}
         >
           <img

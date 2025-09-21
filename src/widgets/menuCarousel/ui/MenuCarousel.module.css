@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .header {
   font-size: 2.2rem;
   font-weight: 700;
@@ -14,137 +15,82 @@
   text-align: center;
   margin-bottom: 18px;
 }
-.carouselWrapper {
+
+.carousel {
   display: flex;
   align-items: center;
-  justify-content: center;
   width: 100%;
-  gap: 2rem;
+  gap: 8px;
   margin-bottom: 18px;
 }
-.arrowBtn {
+
+.carouselArrow {
   background: #45494e;
   border: none;
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  font-size: 1.6rem;
+  width: 44px;
+  height: 44px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: #2d3748;
+  justify-content: center;
   cursor: pointer;
-  margin: 0 8px;
-  transition:
-    background 0.2s,
-    transform 0.2s;
+  flex: 0 0 auto;
+  padding: 0;
+  transition: background 0.2s, transform 0.12s;
 }
 
-/* arrowImg intentionally left out - img uses inline transform */
-
-.arrowBtn:disabled {
+.carouselArrow:disabled {
   opacity: 0.4;
   cursor: default;
 }
-.slide {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: stretch;
-  width: 100%;
-  width: 420px;
+
+.carouselArrowImg {
+  width: 22px;
+  height: 22px;
+  display: block;
 }
 
-.slide img {
+.track {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  flex: 1 1 auto;
+  overflow: hidden;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.carouselCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 🔹 ключевая правка */
+  align-items: center;
+  min-width: 166px;
+  min-height: 232px;
+  padding: 12px;
+  background: #f8f8f8;
+  border-radius: 1.5rem 1.5rem 4rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.carouselBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.carouselImg {
   width: 100%;
-  height: 140px;
+  min-height: 165px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 12px;
 }
-.addBtn {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  background: #2d3748;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 1.4rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  transition:
-    background 0.2s,
-    transform 0.2s;
-  z-index: 2;
-}
-.addBtn.hide {
-  display: none !important;
-}
-.addBtn:hover {
-  background: #015075;
-  transform: scale(1.08);
-}
-.plusIcon {
-  font-size: 2rem;
-  font-weight: 700;
-}
-.card {
-  background: #f8f8f8;
-  border-radius: 1.5rem 1.5rem 4rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 12px;
-  width: calc(50% - 10px);
-  max-width: 320px;
-  min-width: 180px;
-  height: 232px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-/* Счетчик */
-.counterWrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  justify-content: center;
-}
-.counterBtn {
-  background: #e2e8f0;
-  border: none;
-  border-radius: 8px;
-  padding: 4px 14px;
-  font-size: 1.3rem;
-  color: #2d3748;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.counterBtn:hover {
-  background: #cbd5e1;
-  transform: scale(1.1);
-}
-.counter {
-  font-size: 1.2rem;
-  font-weight: 500;
-  min-width: 28px;
-  text-align: center;
-  color: #2d3748;
-}
 
-.name {
+.carouselName {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 600;
@@ -153,14 +99,62 @@
   text-align: left;
   margin-right: auto;
   letter-spacing: 1px;
+  width: 100%;
 }
-.price {
+
+.carouselPrice {
   font-family: "Inter", sans-serif;
   margin-bottom: 8px;
   text-align: left;
   margin-right: auto;
+  width: 100%;
 }
-.addBtn {
+
+.carouselCounterWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  justify-content: center;
+  width: auto;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 2;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 0 6px;
+}
+
+.carouselCounterBtn {
+  background: #e2e8f0;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 14px;
+  font-size: 1.3rem;
+  color: #2d3748;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselCounterBtn:hover {
+  background: #cbd5e1;
+  transform: scale(1.1);
+}
+
+.carouselCounter {
+  font-size: 1.2rem;
+  font-weight: 500;
+  min-width: 28px;
+  text-align: center;
+  color: #2d3748;
+}
+
+.carouselAddBtn {
   background: #2d3748;
   color: #fff;
   border: none;
@@ -170,14 +164,26 @@
   font-size: 1.4rem;
   cursor: pointer;
   margin-top: auto;
-  transition:
-    background 0.2s,
-    transform 0.2s;
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 2;
 }
-.addBtn:hover {
+
+.carouselAddBtn:hover {
   background: #015075;
   transform: scale(1.08);
 }
+
+.carouselPlusIcon {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
 .filters {
   display: flex;
   gap: 12px;
@@ -185,6 +191,7 @@
   margin-top: 12px;
   flex-wrap: wrap;
 }
+
 .filterBtn {
   background: #c4b9a3;
   border: none;
@@ -194,524 +201,9 @@
   font-weight: 500;
   font-family: "Inter", sans-serif;
   color: #45494e;
-  cursor: pointer;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.2s;
-}
-.filterBtn:hover {
-  background: #cbd5e1;
-  transform: scale(1.05);
-}
-.activeFilter {
-  background: #2d3748;
-  color: #fff;
-  font-weight: 700;
-  border-radius: 12px;
-  padding: 8px 22px;
-  font-size: 1.1rem;
-}
-
-/* Responsive breakpoints */
-@media (max-width: 880px) {
-  .container {
-    padding: 18px;
-  }
-  .slide {
-    max-width: 430px;
-    gap: 14px;
-  }
-  .card {
-    width: calc(50% - 10px);
-    min-width: 140px;
-    padding: 10px;
-  }
-  .slide img {
-    height: 120px;
-  }
-  .arrowBtn {
-    width: 44px;
-    height: 44px;
-    font-size: 1.3rem;
-  }
-  .addBtn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 520px) {
-  .container {
-    padding: 12px;
-    margin: 12px auto;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-  .slide {
-    gap: 10px;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 8px;
-  }
-  .card {
-    width: min(380px, 100%);
-    max-width: 380px;
-    min-width: 0;
-    margin: 0 auto;
-    border-radius: 1rem;
-    padding: 12px;
-    box-sizing: border-box;
-  }
-  .slide img {
-    width: 100%;
-    height: 140px;
-  }
-  .counterBtn {
-    padding: 6px 10px;
-  }
-  .filters {
-    gap: 8px;
-  }
-  .carouselWrapper {
-    padding: 0;
-    overflow: hidden;
-  }
-}
-
-
-.container {
-  border-radius: 32px;
-  padding: 24px;
-  max-width: 1100px;
-  margin: 24px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 2rem;
-  margin-bottom: 18px;
-}
-
-.carouselArrow {
-  background: #45494e;
-  border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
-.carouselArrow:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.carouselArrowImg {
-  width: 45px;
-  height: 45px;
-}
-
-.track {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: stretch;
-  width: 420px;
-}
-
-.carouselCard {
-  background: #f8f8f8;
-  border-radius: 1.5rem 1.5rem 4rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 12px;
-  width: calc(50% - 10px);
-  max-width: 320px;
-  min-width: 180px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-
-/* responsive */
-@media (max-width: 520px) {
-  .track {
-    flex-direction: row;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
-    gap: 12px;
-    padding: 0 8px;
-  }
-
-  .carouselCard {
-    flex: 0 0 auto;
-    width: 166px;
-    height: 232px;
-    scroll-snap-align: center;
-  }
-
-  .name {
-    font-size: 16px;
-  }
-
-  .price {
-    font-size: 14px;
-    opacity: .9;
-    color: #45494E;
-  }
-
-  .carouselArrow {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-}
-/* ---------- Карта: замените/вставьте эти правила ---------- */
-
-.carousel {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 8px;            /* расстояние между стрелками и треком */
-  margin-bottom: 18px;
-}
-
-/* Круглая кнопка-стрелка */
-.carouselArrow {
-  background: #45494e;
-  border: none;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex: 0 0 auto;      /* фиксированный размер — не жмёт трек */
-  padding: 0;
-  transition: background 0.2s, transform 0.12s;
-}
-.carouselArrow:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-/* картинка внутри стрелки — чуть меньше, чтобы выглядело аккуратно */
-.carouselArrowImg {
-  width: 22px;
-  height: 22px;
-  display: block;
-}
-
-/* Трек — занимает оставшееся пространство между стрелками */
-.track {
-  display: flex;
-  gap: 20px;
-  align-items: stretch;
-  flex: 1 1 auto;      /* занимает всё имеющееся пространство */
-  overflow: hidden;    /* убираем прокрутку */
-  justify-content: center;
-  box-sizing: border-box;
-  /* удалите любые scroll-snap-type / overflow-x: auto здесь */
-}
-
-/* Карточки: занимаем ровно половину трека (с учётом gap) */
-.carouselCard {  /* две карточки в ряд */
-  min-width: 140px;             /* гарантируем читаемость, не даём сильно ужаться */
-  box-sizing: border-box;
-  height: 232px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  flex-shrink: 0;
-    width: 166px !important; 
-}
-
-/* Изображение карточки */
-.img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-
-/* ---------- Мобильные правки (чтобы ничего не скроллилось и обе карточки были видны) ---------- */
-@media (max-width: 520px) {
-  .carousel {
-    gap: 6px;
-  }
-  .carouselArrow {
-    width: 40px;
-    height: 40px;
-  }
-  .carouselArrowImg {
-    width: 20px;
-    height: 20px;
-  }
-  .track {
-    gap: 12px;
-    overflow: hidden; /* категорично убираем скролл */
-    justify-content: center;
-  }
-  .carouselCard {
-    flex: 0 0 calc(50% - 6px);
-    max-width: calc(50% - 6px);
-    min-width: 130px;
-    height: 232px;
-  }
-}
-
-.track {
-  display: flex;
-  justify-content: center; /* центрируем обе карточки */
-  align-items: stretch;
-  gap: 12px;
-  overflow: hidden; /* убираем скролл */
-  flex: 1 1 auto;
-  box-sizing: border-box;
-}
-
-
-
-.track {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  overflow: hidden;
-  width: 100%; /* занимает всю ширину контейнера */
-  box-sizing: border-box;
-  padding: 0 12px; /* чтобы карточки не упирались в края */
-}
-
-.carouselCard {
-    width: 166px !important; 
-  flex: 0 0 166px !important; /* фиксированная ширина */
-  height: 232px;
-}
-
-.container {
-  border-radius: 32px;
-  padding: 24px;
-  max-width: 1100px;
-  margin: 24px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.header {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #2d3748;
-  text-align: center;
-  margin-bottom: 18px;
-}
-
-.carousel {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 8px;            
-  margin-bottom: 18px;
-}
-
-/* Круглая кнопка-стрелка */
-.carouselArrow {
-  background: #45494e;
-  border: none;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex: 0 0 auto;      
-  padding: 0;
-  transition: background 0.2s, transform 0.12s;
-}
-
-.carouselArrow:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-/* картинка внутри стрелки */
-.carouselArrowImg {
-  width: 22px;
-  height: 22px;
-  display: block;
-}
-
-/* Трек — занимает оставшееся пространство между стрелками */
-.track {
-  display: flex;
-  gap: 20px;
-  align-items: stretch;
-  flex: 1 1 auto;      
-  overflow: hidden;    
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-/* Карточки: занимаем ровно половину трека (с учётом gap) */
-.carouselCard {  
-  width: 166px !important;        /* фиксированная ширина как ты просил */
-  height: 232px;       /* фиксированная высота */
-  flex: 0 0 auto;      /* не сжимается и не растягивается */
-  background: #f8f8f8;
-  border-radius: 1.5rem 1.5rem 4rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-
-.name {
-  font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 6px;
-  text-align: left;
-  margin-right: auto;
-  letter-spacing: 1px;
-  width: 100%;
-}
-
-.price {
-  font-family: "Inter", sans-serif;
-  margin-bottom: 8px;
-  text-align: left;
-  margin-right: auto;
-  width: 100%;
-}
-
-/* Счетчик */
-.counterWrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  justify-content: center;
-  width: 100%;
-}
-
-.counterBtn {
-  background: #e2e8f0;
-  border: none;
-  border-radius: 8px;
-  padding: 4px 14px;
-  font-size: 1.3rem;
-  color: #2d3748;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.2s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.counterBtn:hover {
-  background: #cbd5e1;
-  transform: scale(1.1);
-}
-
-.counter {
-  font-size: 1.2rem;
-  font-weight: 500;
-  min-width: 28px;
-  text-align: center;
-  color: #2d3748;
-}
-
-.addBtn {
-  background: #2d3748;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  height: 34px;
-  width: 34px;
-  font-size: 1.4rem;
-  cursor: pointer;
-  margin-top: auto;
-  transition:
-    background 0.2s,
-    transform 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.addBtn:hover {
-  background: #015075;
-  transform: scale(1.08);
-}
-
-.plusIcon {
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.filters {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-.filterBtn {
-  background: #c4b9a3;
-  border: none;
-  border-radius: 12px;
-  padding: 8px 22px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  font-family: "Inter", sans-serif;
-  color: #45494e;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.2s;
-}
 
 .filterBtn:hover {
   background: #cbd5e1;
@@ -727,7 +219,7 @@
   font-size: 1.1rem;
 }
 
-/* Responsive breakpoints */
+/* Responsive */
 @media (max-width: 520px) {
   .container {
     padding: 12px;
@@ -736,52 +228,52 @@
     max-width: 100%;
     box-sizing: border-box;
   }
-  
+
   .carousel {
     gap: 6px;
   }
-  
+
   .carouselArrow {
     width: 40px;
     height: 40px;
   }
-  
+
   .carouselArrowImg {
     width: 20px;
     height: 20px;
   }
-  
+
   .track {
     gap: 12px;
-    overflow: hidden; /* категорично убираем скролл */
+    overflow: hidden;
     justify-content: center;
   }
-  
+
   .carouselCard {
-    width: 166px !important;      /* сохраняем твою ширину */
+    width: 166px !important;
     height: 232px;
     flex: 0 0 auto;
   }
-  
-  .name {
+
+  .carouselName {
     font-size: 0.9rem;
   }
-  
-  .price {
+
+  .carouselPrice {
     font-size: 0.85rem;
-    opacity: .9;
-    color: #45494E;
+    opacity: 0.9;
+    color: #45494e;
   }
-  
-  .counterBtn {
+
+  .carouselCounterBtn {
     padding: 3px 10px;
     font-size: 1.1rem;
   }
-  
-  .counter {
+
+  .carouselCounter {
     font-size: 1rem;
   }
-  
+
   .filters {
     gap: 8px;
   }
