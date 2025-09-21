@@ -112,8 +112,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             <img src={item.src} alt={`slide-${idx}`} />
             <h2
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "8rem",
+                fontFamily: "'Cormorant Garamond', serif"
               }}
               className={styles.slideHeader}
             >
