@@ -60,6 +60,11 @@
   text-align: center;
   padding: 0 20px;
   max-width: 90%;
+  /* ✅ КРИТИЧНЫЕ ИСПРАВЛЕНИЯ */
+  white-space: nowrap; /* ✅ НЕ ПЕРЕНОСИМ ТЕКСТ */
+  overflow: hidden; /* ✅ Скрываем лишнее */
+  text-overflow: ellipsis; /* ✅ Многоточие для длинного текста */
+  width: 100%; /* ✅ Используем всю доступную ширину */
 }
 
 .pagination {
