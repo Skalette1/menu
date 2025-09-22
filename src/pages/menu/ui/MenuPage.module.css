@@ -78,8 +78,8 @@
 /* Кнопка добавления - АБСОЛЮТНОЕ ПОЗИЦИОНИРОВАНИЕ */
 .menuAddBtn {
   position: absolute;
-  bottom: 0px;
-  right: 2px;
+  bottom: 1px;
+  right: 3px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -108,8 +108,8 @@
 
 .menuCounterWrapper {
   position: absolute;
-  bottom: 0px;
-  right: 2px;
+  bottom: 1px;
+  right: 3px;
   display: flex;
   align-items: center;
   gap: 1px; 
@@ -242,13 +242,12 @@
 .stickyNav {
   position: sticky;
   top: 0;
-  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
   display: flex;
   gap: 0.5rem;
   justify-content: center;
   width: 100%;
-  padding: 1rem 0.5rem;
+  padding: 1.5rem 0.5rem;
   z-index: 900;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
@@ -266,14 +265,16 @@
 
 .filterBtn {
   background: transparent;
-  border: 2px solid #2f3a4c;
+    background: #E9E5DD;
   color: #2f3a4c;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  font-size: 0.9rem;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
   font-weight: 500;
   transition: all 0.3s ease;
   white-space: nowrap;
+  border: none;
 }
 
 .filterBtn:hover {
@@ -285,12 +286,7 @@
 .activeFilter {
   background: #2f3a4c;
   color: #ffffff;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  border: 2px solid #2f3a4c;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transform: scale(1.05);
+  border-radius: 8px;
 }
 
 .menuContainer h3 {

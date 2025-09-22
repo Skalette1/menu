@@ -86,6 +86,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative; /* Делаем контейнер позиционированным */
+  width: 100%;
+  padding: 0 12px 12px 12px; /* Отступы только для нижней части */
+  box-sizing: border-box;
+  flex-shrink: 0; /* Предотвращаем сжатие */
 }
 
 .carouselImg {
@@ -123,7 +128,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 10px 0;
   justify-content: center;
   width: auto;
   position: absolute;
@@ -134,6 +138,7 @@
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   padding: 6px 14px;
+  margin: 0 !important; /* УБИРАЕМ ВСЕ МАРГИНЫ */
 }
 
 .carouselCounterBtn {
@@ -296,6 +301,10 @@
     box-sizing: border-box !important;
   }
 
+  .carouselBottom {
+    padding: 0 8px 8px 8px !important;
+  }
+
   .carouselImg {
     min-height: 150px !important;
     border-radius: 1.5rem 1.5rem 0 0 !important; /* Радиус как у карточки */
@@ -320,7 +329,10 @@
   }
 
   .carouselCounterWrapper {
+    bottom: 6px !important;
+    right: 6px !important;
     padding: 4px 10px !important;
+    margin: 0 !important; /* УБИРАЕМ ВСЕ МАРГИНЫ */
   }
 
   .carouselCounterBtn {
@@ -336,6 +348,8 @@
   }
 
   .carouselAddBtn {
+    bottom: 6px !important;
+    right: 6px !important;
     width: 28px !important;
     height: 28px !important;
     font-size: 1rem !important;
