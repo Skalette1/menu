@@ -120,7 +120,7 @@ export const DishDetailsPage: React.FC = () => {
       </div>
 
       <div className={styles.recommendedSection}>
-        <h3>Покупают вместе</h3>
+        <h3>Покупают <span style={{color: '#AE9E7E'}}>вместе</span></h3>
         <div className={styles.recommendedList}>
           {PRODUCTS.filter(
             (p) => p.category === product.category && p.id !== product.id,
@@ -137,6 +137,7 @@ export const DishDetailsPage: React.FC = () => {
                   alt={p.name}
                   className={styles.recImg}
                 />
+                <div className={styles.recCardBottom}>
                 <div className={styles.recName}>{p.name}</div>
                 <div className={styles.recFooter}>
                   <div className={styles.recPrice}>{p.price}₽</div>
@@ -159,6 +160,7 @@ export const DishDetailsPage: React.FC = () => {
                   >
                     +
                   </button>
+                </div>
                 </div>
               </div>
             ))}

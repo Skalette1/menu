@@ -1,13 +1,16 @@
-/* Minimal styles for DishDetailsPage */
+/* ===== Общие стили страницы ===== */
 .page {
   font-family: Roboto, Arial, sans-serif;
-  background: #f7f2eb;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 40px;
+  box-sizing: border-box;
+  padding-top: 0; /* если был отступ сверху, убираем */
+  position: relative; 
 }
+
 .back {
   position: absolute;
   left: 20px;
@@ -17,48 +20,64 @@
   font-size: 28px;
   cursor: pointer;
 }
+
 .img {
-  width: 80%;
+  width: 100%;
   max-width: 430px;
-  height: 300px;
+  min-height: 359px;
+  max-height: 359px;
   object-fit: cover;
-  border-radius: 24px;
-  margin-top: 3.2rem;
+  margin-top: 0;
+  align-items: flex-start;
 }
+
 .actions {
   margin-top: 16px;
   display: flex;
   gap: 12px;
   align-items: center;
 }
+
 .infoCard {
-  width: 86%;
+  width: 92%;
   max-width: 720px;
   background: white;
   border-radius: 12px;
   padding: 20px;
   margin-top: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
+
 .title {
-  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-style: bold;
+  font-size: 28px;
   margin: 0 0 8px 0;
 }
+
 .description {
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
-  color: #444;
+  font-weight: 400;
+  color: #45494E;
   line-height: 1.5;
   margin-bottom: 16px;
 }
+
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .price {
-  font-size: 28px;
-  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  font-size: 34px;
+  font-weight: 400;
 }
+
 .counterBlock {
   display: flex;
   align-items: center;
@@ -68,58 +87,88 @@
   padding: 8px 12px;
   border-radius: 12px;
 }
+
 .counterBtn {
   background: transparent;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 32px;
   cursor: pointer;
   width: 32px;
   height: 32px;
 }
+
 .counterValue {
   min-width: 28px;
   text-align: center;
-  font-size: 18px;
+  font-size: 32px;
 }
 
+/* ===== Рекомендованные блюда ===== */
 .recommendedSection {
-  width: 86%;
+  width: 92%;
   max-width: 720px;
   margin-top: 18px;
+  margin: 18px auto;
 }
+
+.recommendedSection h3 {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  font-size: 24px;
+  margin: 0 auto 8px auto;
+}
+
 .recommendedList {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 12px;
+  justify-content: center;
 }
+
 .recCard {
+  height: 232px;
   background: white;
   border-radius: 8px;
-  padding: 8px;
-  width: calc(33.333% - 8px);
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   cursor: pointer;
+  flex: 0 0 auto;
 }
+
 .recImg {
+  align-items: flex-start;
   width: 100%;
   height: 140px;
   object-fit: cover;
-  border-radius: 6px;
+  margin: 0;
 }
+
 .recName {
-  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
   margin-top: 6px;
 }
+
+.recCardBottom {
+  padding: .15rem 0.4rem;
+}
+
 .recFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
 }
+
 .recPrice {
+  font-size: 14px;
   font-weight: 500;
 }
+
 .recAdd {
   background: #2f3a4c;
   color: white;
@@ -136,23 +185,57 @@
   margin-bottom: 1rem;
 }
 
+/* ===== Адаптив ===== */
 @media (max-width: 768px) {
   .img {
-    height: 220px;
+    max-height: 220px;
   }
   .title {
-    font-size: 20px;
+  font-size: 28px;
   }
   .price {
-    font-size: 24px;
+    font-size: 32px;
   }
   .recommendedList {
-    flex-direction: column;
-  }
-  .recommendedList img {
-    height: 200px;
+    flex-wrap: wrap;
   }
   .recCard {
-    width: 100%;
+    width: calc(50% - 6px); /* 2 колонки на планшете */
+  }
+  .recImg {
+    height: 160px;
+  }
+}
+
+@media (max-width: 414px) {
+  .title {
+  font-size: 24px;
+  }
+  .price {
+    font-size: 32px;
+  }
+  .recommendedList {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .recCard {
+    width: 166px; /* 2 карточки по ширине 166px */
+    height: auto;
+  }
+  .recImg {
+    height: 165px;
+  }
+  .infoCard,
+  .recommendedSection {
+    width: 95%;
+  }
+}
+
+@media (max-width: 374px) {
+  .recCard {
+    width: 160px; /* чуть меньше для очень узких экранов */
+  }
+  .recImg {
+    height: 130px;
   }
 }

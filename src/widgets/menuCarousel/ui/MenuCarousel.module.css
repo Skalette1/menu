@@ -525,3 +525,46 @@
     padding: 0 4px !important;
   }
 }
+
+@media (max-width: 414px) {
+  .carousel {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    overflow: visible; /* стрелки видны */
+  }
+
+  .track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto; /* горизонтальный скролл */
+    -webkit-overflow-scrolling: touch; /* плавный скролл на iOS */
+    padding: 0 8px; /* минимальные отступы */
+    scroll-snap-type: x mandatory;
+  }
+
+  .carouselCard {
+    flex: 0 0 164px;
+    scroll-snap-align: start;
+    margin-right: 0;
+  }
+
+  .carouselArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    z-index: 10;
+  }
+
+  .carouselArrow:first-of-type {
+    left: 4px;
+  }
+
+  .carouselArrow:last-of-type {
+    right: 4px;
+  }
+}
