@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .header {
@@ -22,6 +23,7 @@
   width: 100%;
   gap: 8px;
   margin-bottom: 18px;
+  box-sizing: border-box;
 }
 
 .carouselArrow {
@@ -37,6 +39,8 @@
   flex: 0 0 auto;
   padding: 0;
   transition: background 0.2s, transform 0.12s;
+  flex-shrink: 0;
+  z-index: 10;
 }
 
 .carouselArrow:disabled {
@@ -47,7 +51,9 @@
 .carouselArrowImg {
   width: 22px;
   height: 22px;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .track {
@@ -63,16 +69,17 @@
 .carouselCard {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 🔹 ключевая правка */
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   min-width: 166px;
   min-height: 232px;
-  padding: 12px;
+  padding: 0; /* Убрал все padding */
   background: #f8f8f8;
-  border-radius: 1.5rem 1.5rem 4rem 1.5rem;
+  border-radius: 3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   position: relative;
   box-sizing: border-box;
+  flex: 0 0 auto;
 }
 
 .carouselBottom {
@@ -81,33 +88,35 @@
   align-items: center;
 }
 
-
 .carouselImg {
   width: 100%;
   min-height: 165px;
+  height: 165px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
+  border-radius: 1.5rem 1.5rem 0 0; /* Радиус как у карточки */
+  margin: 0; /* Убрал margin */
 }
 
 .carouselName {
-  font-family: "Inter", sans-serif;
-  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
   font-weight: 600;
   color: #2d3748;
-  margin-bottom: 6px;
+  margin: 12px 12px 6px 12px; /* Вернул отступы для текста */
   text-align: left;
   margin-right: auto;
   letter-spacing: 1px;
-  width: 100%;
+  width: calc(100% - 24px); /* Ширина с учетом padding */
 }
 
 .carouselPrice {
   font-family: "Inter", sans-serif;
-  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  margin: 0 12px 8px 12px; /* Вернул отступы для текста */
   text-align: left;
   margin-right: auto;
-  width: 100%;
+  width: calc(100% - 24px); /* Ширина с учетом padding */
 }
 
 .carouselCounterWrapper {
@@ -121,24 +130,27 @@
   bottom: 8px;
   right: 8px;
   z-index: 2;
-  background: #fff;
+  background: #2d3748;
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  padding: 0 6px;
+  padding: 6px 14px;
 }
 
 .carouselCounterBtn {
-  background: #e2e8f0;
+  background: transparent;
   border: none;
-  border-radius: 8px;
-  padding: 4px 14px;
-  font-size: 1.3rem;
-  color: #2d3748;
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 1rem;
+  color: #ffffff;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
 .carouselCounterBtn:hover {
@@ -151,26 +163,26 @@
   font-weight: 500;
   min-width: 28px;
   text-align: center;
-  color: #2d3748;
+  color: #ffffff;
 }
 
 .carouselAddBtn {
-  background: #2d3748;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  height: 34px;
-  width: 34px;
-  font-size: 1.4rem;
-  cursor: pointer;
-  margin-top: auto;
-  transition: background 0.2s, transform 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: absolute;
   bottom: 8px;
   right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2f3a4c;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
   z-index: 2;
 }
 
@@ -180,8 +192,8 @@
 }
 
 .carouselPlusIcon {
-  font-size: 2rem;
-  font-weight: 700;
+  display: block;
+  line-height: 1;
 }
 
 .filters {
@@ -219,62 +231,274 @@
   font-size: 1.1rem;
 }
 
-/* Responsive */
-@media (max-width: 520px) {
+/* === АДАПТИВНОСТЬ ДЛЯ IPHONE 12 === */
+
+/* iPhone 12 (375px) и iPhone 12 Pro (390px) */
+@media only screen and (max-width: 390px) and (min-width: 375px) {
   .container {
-    padding: 12px;
-    margin: 12px auto;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+    padding: 8px !important;
+    margin: 8px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 24px !important;
   }
 
   .carousel {
-    gap: 6px;
+    width: 100% !important;
+    gap: 4px !important;
+    margin-bottom: 18px !important;
+    padding: 0 !important;
+    position: relative !important;
   }
 
   .carouselArrow {
-    width: 40px;
-    height: 40px;
+    display: block !important;
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+    position: absolute !important;
+    z-index: 10 !important;
+  }
+
+  .carouselArrow:first-of-type {
+    left: -2px !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .carouselArrow:last-of-type {
+    right: -2px !important;
+    transform: translateX(50%) !important;
   }
 
   .carouselArrowImg {
-    width: 20px;
-    height: 20px;
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .track {
-    gap: 12px;
-    overflow: hidden;
-    justify-content: center;
+    width: calc(100% - 72px) !important; /* 100% минус ширина двух стрелок */
+    gap: 12px !important;
+    overflow: hidden !important;
+    justify-content: center !important;
+    padding: 0 36px !important; /* отступы под стрелки */
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
   }
 
   .carouselCard {
-    width: 166px !important;
-    height: 232px;
-    flex: 0 0 auto;
+    width: 164px !important;
+    min-width: 164px !important;
+    max-width: 164px !important;
+    height: 232px !important;
+    flex: 0 0 164px !important;
+    padding: 0 !important; /* Убрал все padding */
+    box-sizing: border-box !important;
+  }
+
+  .carouselImg {
+    min-height: 150px !important;
+    border-radius: 1.5rem 1.5rem 0 0 !important; /* Радиус как у карточки */
+    margin: 0 !important;
   }
 
   .carouselName {
-    font-size: 0.9rem;
+    font-size: 14px !important;
+    margin: 8px 8px 4px 8px !important; /* Отступы для текста */
+    width: calc(100% - 16px) !important;
+    line-height: 1.2 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 
   .carouselPrice {
-    font-size: 0.85rem;
-    opacity: 0.9;
-    color: #45494e;
+    font-size: 13px !important;
+    margin: 0 8px 6px 8px !important; /* Отступы для текста */
+    width: calc(100% - 16px) !important;
+  }
+
+  .carouselCounterWrapper {
+    padding: 4px 10px !important;
   }
 
   .carouselCounterBtn {
-    padding: 3px 10px;
-    font-size: 1.1rem;
+    padding: 2px 8px !important;
+    font-size: 0.95rem !important;
+    min-width: 24px !important;
+    height: 24px !important;
   }
 
   .carouselCounter {
-    font-size: 1rem;
+    font-size: 1rem !important;
+    min-width: 24px !important;
+  }
+
+  .carouselAddBtn {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 1rem !important;
   }
 
   .filters {
-    gap: 8px;
+    gap: 6px !important;
+    margin-top: 8px !important;
+    padding: 0 8px !important;
+  }
+
+  .filterBtn {
+    padding: 6px 16px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .activeFilter {
+    padding: 6px 16px !important;
+    font-size: 1rem !important;
+  }
+}
+
+/* Другие iPhone (414px и меньше, кроме 375-390) */
+@media (max-width: 414px) and (min-width: 391px) {
+  .container {
+    padding: 6px !important;
+    margin: 6px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .carousel {
+    gap: 4px !important;
+  }
+
+  .carouselArrow {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+  }
+
+  .carouselArrowImg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .track {
+    gap: 12px !important;
+    overflow: hidden !important;
+    justify-content: center !important;
+  }
+
+  .carouselCard {
+    width: 164px !important;
+    min-width: 164px !important;
+    height: 232px !important;
+    flex: 0 0 164px !important;
+    padding: 0 !important; /* Убрал все padding */
+  }
+
+  .carouselImg {
+    border-radius: 1.5rem 1.5rem 0 0 !important; /* Радиус как у карточки */
+  }
+
+  .carouselName {
+    margin: 10px 10px 5px 10px !important;
+    width: calc(100% - 20px) !important;
+  }
+
+  .carouselPrice {
+    margin: 0 10px 7px 10px !important;
+    width: calc(100% - 20px) !important;
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 374px) {
+  .carouselCard {
+    width: 158px !important;
+    min-width: 158px !important;
+    flex: 0 0 158px !important;
+    padding: 0 !important; /* Убрал все padding */
+  }
+
+  .track {
+    gap: 8px !important;
+  }
+
+  .carousel {
+    gap: 2px !important;
+  }
+
+  .carouselImg {
+    border-radius: 1.5rem 1.5rem 0 0 !important;
+  }
+
+  .carouselName {
+    margin: 6px 6px 3px 6px !important;
+    width: calc(100% - 12px) !important;
+    font-size: 13px !important;
+  }
+
+  .carouselPrice {
+    margin: 0 6px 5px 6px !important;
+    width: calc(100% - 12px) !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Большие мобильные и планшеты */
+@media (min-width: 415px) and (max-width: 768px) {
+  .container {
+    padding: 16px !important;
+    margin: 16px auto !important;
+  }
+
+  .carousel {
+    gap: 8px !important;
+  }
+
+  .carouselArrow {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .carouselArrowImg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .track {
+    gap: 16px !important;
+  }
+
+  .carouselCard {
+    min-width: 166px !important;
+    width: 166px !important;
+    padding: 0 !important; /* Убрал все padding */
+  }
+
+  .carouselImg {
+    border-radius: 1.5rem 1.5rem 0 0 !important; /* Радиус как у карточки */
+  }
+
+  .carouselName {
+    margin: 12px 12px 6px 12px !important;
+    width: calc(100% - 24px) !important;
+  }
+
+  .carouselPrice {
+    margin: 0 12px 8px 12px !important;
+    width: calc(100% - 24px) !important;
+  }
+}
+
+/* Десктоп */
+@media (min-width: 769px) {
+  .carouselArrow {
+    display: block !important;
+  }
+
+  .track {
+    overflow: hidden !important;
   }
 }
