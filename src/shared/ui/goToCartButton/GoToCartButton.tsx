@@ -47,16 +47,6 @@ export const GoToCartButton: React.FC = () => {
         <p>Корзина</p>
         <p className={styles.counterCart}>{count}</p>
       </Link>
-      <button
-        className={styles.closeButton}
-        aria-label="Скрыть корзину"
-        onClick={(e) => {
-          e.preventDefault();
-          setVisible(false);
-        }}
-      >
-        ✕
-      </button>
     </div>
   );
 };
