@@ -109,6 +109,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         {images.map((item, idx) => (
           <div key={idx} className={styles.slide}>
             <img src={item.src} alt={`slide-${idx}`} />
+            <div className={styles.textContainer}>
             <h2
               style={{
                 fontFamily: "'Cormorant Garamond', serif"
@@ -117,7 +118,8 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             >
               {item.header}
             </h2>
-            {item.text && <div className={styles.slideText}>{item.text}</div>}
+              {item.text && <div className={styles.slideText}>{item.text}</div>}
+            </div>
           </div>
         ))}
       </div>

@@ -238,43 +238,33 @@
   }
 }
 
-.stickyNav {
-  position: sticky;
-  top: 0;
-  backdrop-filter: blur(8px);
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  padding: .7rem 0.5rem;
-  z-index: 900;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-}
-
 .menuContainer {
   padding-bottom: 120px;
 }
 
-.filters {
+.menuContainer h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+  position: relative;
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  margin: 2rem 0 1rem 0; /* отступы сверху/снизу */
+  color: #2f3a4c;
 }
 
-.filterBtn {
-  background: transparent;
-    background: #E9E5DD;
-  color: #2f3a4c;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  border: none;
-  cursor: pointer;
+.menuContainer h3::before,
+.menuContainer h3::after {
+  content: "";
+  flex: 1;
+  height: 1px; /* толщина линии */
+  background: #2F3A4C; /* цвет линии */
+  margin: 0 12px; /* отступ между текстом и линией */
+  border-radius: 2px;
 }
+
 
 .filterBtn:hover {
   background: #2f3a4c;
@@ -288,18 +278,6 @@
   border-radius: 8px;
   padding: 8px 22px;
 }
-
-.menuContainer h3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: #2f3a4c;
-  text-align: center;
-  letter-spacing: 0.5px;
-  margin: 2rem 0 1.5rem 0;
-  text-transform: uppercase;
-}
-
 /* Адаптив для навигации */
 @media (max-width: 1000px) {
   .stickyNav {
@@ -327,5 +305,68 @@
   .menuContainer h3 {
     font-size: 20px;
     margin: 1.2rem 0 0.8rem 0;
+  }
+}
+
+.stickyNav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-start; /* изменил на flex-start */
+  padding: .7rem 0.5rem;
+  z-index: 900;
+  overflow-x: auto; /* горизонтальный скролл */
+  white-space: nowrap; /* запрет переноса */
+  scrollbar-width: none; /* скрыть скроллбар в Firefox */
+  -ms-overflow-style: none; /* скрыть скроллбар в IE */
+}
+
+.stickyNav::-webkit-scrollbar {
+  display: none; /* скрыть скроллбар в Chrome/Safari */
+}
+
+.filters {
+  display: inline-flex; /* важно для горизонтального скролла */
+  gap: 0.5rem;
+  flex-wrap: nowrap; /* запрет переноса */
+  padding: 0 8px;
+}
+
+/* Остальные стили остаются такими же */
+.filterBtn {
+  background: transparent;
+  background: #E9E5DD;
+  color: #2f3a4c;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0; /* важно: кнопки не сжимаются */
+}
+
+.activeFilter {
+  background: #2f3a4c;
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 900;
+  border-radius: 8px;
+  padding: 12px 20px;
+  flex-shrink: 0; /* важно: кнопки не сжимаются */
+}
+
+@media (max-width: 480px) {
+  .stickyNav {
+    padding: .7rem 0.5rem;
+  }
+  
+  .filterBtn,
+  .activeFilter {
+    padding: 10px 16px; /* немного уменьшаем паддинг на очень маленьких экранах */
+    font-size: 13px;
   }
 }

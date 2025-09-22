@@ -139,4 +139,11 @@
     font-size: 20px;
     margin-top: 2.3rem;
   }
+
+  .imgContainer img, 
+  .imgContainer svg {
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+}
 }
