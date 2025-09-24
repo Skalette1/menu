@@ -12,70 +12,48 @@
 }
 
 .menuCard {
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-  border-radius: 1.5rem;
-  box-shadow: 0 2px 6px rgba(164, 160, 160, 0.1);
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.menuCard:hover {
-  transform: translateY(-5px);
-}
-
-.menuCard img {
-  border-radius: 1rem;
-  width: 70%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.menuCard {
   position: relative;
   height: 260px;
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  /* затемнение картинки */
+  background-color: rgba(0, 0, 0, 0.45); /* уровень затемнения */
+  background-blend-mode: darken; /* затемнение только картинки */
 }
 
-.menuCard::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15));
+.menuCard:hover {
+  transform: translateY(-5px);
+  background-color: rgba(0, 0, 0, 0.6); /* чуть темнее при hover */
 }
 
 .menuCard h3 {
-  margin: 10px 0;
-  color: rgb(130, 110, 86);
+  margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2rem;
   font-weight: 600;
-  font-style: regular;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff;
+  color: #fff; /* текст всегда белый */
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
   z-index: 1;
+  text-align: center;
 }
 
-@media(max-width: 760px) {
+@media (max-width: 760px) {
   .menuCard {
-  height: 184px;
-}
+    height: 184px;
+  }
 
-.name {
-  font-size: 32px;
-}
+  .menuCard h3 {
+    font-size: 32px;
+  }
 }

@@ -12,7 +12,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   const [current, setCurrent] = useState(0);
   const [startX, setStartX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleNext = () => {
     setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1));
@@ -22,69 +22,72 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
     setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // Обработчики для свайпа
+  // Сброс и перезапуск автопрокрутки
+  const resetAutoSlide = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(handleNext, 5000);
+  };
+
+  // --- свайп touch ---
   const handleTouchStart = (e: React.TouchEvent) => {
     setStartX(e.touches[0].clientX);
     setIsDragging(true);
+    if (intervalRef.current) clearInterval(intervalRef.current); // стопаем авто
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging) return;
-    
     const currentX = e.touches[0].clientX;
     const diff = startX - currentX;
 
-    // Если свайп достаточно большой, меняем слайд
     if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
+      if (diff > 0) handleNext();
+      else handlePrev();
       setIsDragging(false);
+      resetAutoSlide(); // перезапускаем после свайпа
     }
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
+    resetAutoSlide();
   };
 
-  // Также добавим поддержку мыши для десктопа
+  // --- свайп мышкой ---
   const handleMouseDown = (e: React.MouseEvent) => {
     setStartX(e.clientX);
     setIsDragging(true);
+    if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
-    
     const currentX = e.clientX;
     const diff = startX - currentX;
 
     if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
+      if (diff > 0) handleNext();
+      else handlePrev();
       setIsDragging(false);
+      resetAutoSlide();
     }
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    resetAutoSlide();
   };
 
-  // Автопрокрутка (опционально)
   useEffect(() => {
-    const interval = setInterval(handleNext, 5000);
-    return () => clearInterval(interval);
+    resetAutoSlide();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (
-    <div 
+    <div
       className={styles.carousel}
-      ref={carouselRef}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -96,28 +99,27 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
       <div className={styles.imgContainer}>
         <CartPopup />
         <Link to="/cart">
-        <img src={cartPng} alt="cart" />
+          <img src={cartPng} alt="cart" />
         </Link>
       </div>
+
       <div
         className={styles.slides}
-        style={{ 
+        style={{
           transform: `translateX(-${current * 100}%)`,
-          transition: isDragging ? 'none' : 'transform 0.3s ease'
+          transition: isDragging ? "none" : "transform 0.3s ease",
         }}
       >
         {images.map((item, idx) => (
           <div key={idx} className={styles.slide}>
             <img src={item.src} alt={`slide-${idx}`} />
             <div className={styles.textContainer}>
-            <h2
-              style={{
-                fontFamily: "'Cormorant Garamond', serif"
-              }}
-              className={styles.slideHeader}
-            >
-              {item.header}
-            </h2>
+              <h2
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                className={styles.slideHeader}
+              >
+                {item.header}
+              </h2>
               {item.text && <div className={styles.slideText}>{item.text}</div>}
             </div>
           </div>
@@ -131,7 +133,10 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             className={`${styles.dot} ${
               current === idx ? styles.dotActive : ""
             }`}
-            onClick={() => setCurrent(idx)}
+            onClick={() => {
+              setCurrent(idx);
+              resetAutoSlide();
+            }}
           />
         ))}
       </div>

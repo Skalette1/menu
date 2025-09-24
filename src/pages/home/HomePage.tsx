@@ -7,9 +7,9 @@ import { Roulette } from "../../widgets/roulette/ui/Roulette";
 
 export const HomePage = () => {
   const images = [
-    { src: hamziPng, header: "HAMZI", text: "Кодим твой успех" },
-    { src: cheesCakePng, header: "HAMZI", text: "Кодим твой успех" },
-    { src: saladPng, header: "HAMZI", text: "Кодим твой успех" },
+    { src: hamziPng, header: "HAMZI", text: "Давай создадим что-то великое вместе" },
+    { src: cheesCakePng, header: "HAMZI", text: "Давай создадим что-то великое вместе" },
+    { src: saladPng, header: "HAMZI", text: "Давай создадим что-то великое вместе" },
   ];
 
   return (
