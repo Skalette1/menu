@@ -1,22 +1,5 @@
 @import url("./CormorantGaramond.css");
 
-.slideHeader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -70%);
-  font-family: "Cormorant Garamond", serif;
-  font-weight: 600;
-  font-size: 90px;
-  line-height: 1;
-  letter-spacing: 0;
-  text-align: center;
-  color: #fff;
-  margin: 0;
-  z-index: 2;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
-}
-
 .carousel {
   position: relative;
   width: 100vw;
@@ -42,29 +25,50 @@
   height: 100%;
   object-fit: cover;
   filter: brightness(40%);
+  border-radius: 0; /* Ensure no corners cause issues */
 }
 
-.slideText {
+.textContainer {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 90%;
+  z-index: 2;
+}
+
+.slideHeader {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 90px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-align: center;
   color: #fff;
-  font-family:
-    Montserrat Alternates,
-    sans-serif;
+  margin: 0 0 20px 0; /* Space below header for slideText */
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+}
+
+.slideText {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 20px; /* Space between columns */
+  color: #fff;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 1.5rem;
   font-style: italic;
   font-weight: 300;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
   text-align: center;
-  padding: 0 20px;
-  max-width: 90%;
-  /* ✅ КРИТИЧНЫЕ ИСПРАВЛЕНИЯ */
-  white-space: nowrap; /* ✅ НЕ ПЕРЕНОСИМ ТЕКСТ */
-  overflow: hidden; /* ✅ Скрываем лишнее */
-  text-overflow: ellipsis; /* ✅ Многоточие для длинного текста */
-  width: 100%; /* ✅ Используем всю доступную ширину */
+  max-width: 100%;
+  overflow: hidden; /* Clip overflow */
+}
+
+/* Ensure text in columns doesn't wrap unnecessarily */
+.slideText div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; /* Allow wrapping within columns */
 }
 
 .pagination {
@@ -90,25 +94,6 @@
   background-color: #333;
 }
 
-.slide h2 {
-  position: absolute;
-  top: 130px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  font-family:
-    Montserrat Alternates,
-    sans-serif;
-  font-size: 8rem;
-  font-weight: 600;
-  font-style: SemiBold;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-  z-index: 2;
-  margin: 0;
-  text-align: center;
-}
-
-
 .imgContainer {
   position: absolute;
   top: 20px;
@@ -116,11 +101,11 @@
   justify-content: space-between;
   gap: 10px;
   z-index: 2;
-  width: 100%; 
-  padding: 0 16px; 
+  width: 100%;
+  padding: 0 16px;
 }
 
-.imgContainer img, 
+.imgContainer img,
 .imgContainer svg {
   height: 40px;
   width: 40px;
@@ -129,26 +114,23 @@
 
 @media (max-width: 768px) {
   .carousel {
-  height: 450px;
-}
-
-.slide h2 {
-  font-size: 84px;
-}
+    height: 450px;
+  }
 
   .slideHeader {
-    margin-bottom: 0.2rem;
+    font-size: 60px; /* Reduced for mobile */
+    margin-bottom: 10px;
   }
 
   .slideText {
-    font-size: 20px;
-    margin-top: 2.3rem;
+    grid-template-columns: 1fr; /* Stack columns on mobile */
+    font-size: 1.2rem;
+    gap: 10px;
   }
 
-  .imgContainer img, 
+  .imgContainer img,
   .imgContainer svg {
-  height: 24px;
-  width: 24px;
-  cursor: pointer;
-}
+    height: 24px;
+    width: 24px;
+  }
 }

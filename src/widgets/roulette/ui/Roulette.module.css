@@ -4,6 +4,7 @@
   margin-bottom: 16px;
   display: flex;
   justify-content: center;
+    scroll-snap-type: x mandatory;
 }
 
 .carousel {
@@ -15,6 +16,7 @@
   width: 100%;
   min-height: max-content;
   justify-content: center;
+    scroll-snap-type: x mandatory;
 }
 
 .drinkCard {
@@ -29,6 +31,7 @@
   transition:
     opacity 0.2s,
     transform 0.2s;
+    scroll-snap-align: center; 
 }
 
 .selectedCard {
@@ -53,6 +56,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+    scroll-snap-type: x mandatory;
 }
 
 .headerCentered {
@@ -481,3 +485,4 @@
     min-width: 80px;
   }
 }
+

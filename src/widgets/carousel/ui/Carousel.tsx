@@ -22,17 +22,15 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
     setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // Сброс и перезапуск автопрокрутки
   const resetAutoSlide = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(handleNext, 5000);
   };
 
-  // --- свайп touch ---
   const handleTouchStart = (e: React.TouchEvent) => {
     setStartX(e.touches[0].clientX);
     setIsDragging(true);
-    if (intervalRef.current) clearInterval(intervalRef.current); // стопаем авто
+    if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -44,7 +42,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
       if (diff > 0) handleNext();
       else handlePrev();
       setIsDragging(false);
-      resetAutoSlide(); // перезапускаем после свайпа
+      resetAutoSlide(); 
     }
   };
 
@@ -53,7 +51,6 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
     resetAutoSlide();
   };
 
-  // --- свайп мышкой ---
   const handleMouseDown = (e: React.MouseEvent) => {
     setStartX(e.clientX);
     setIsDragging(true);

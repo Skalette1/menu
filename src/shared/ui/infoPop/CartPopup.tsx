@@ -39,12 +39,6 @@ export const CartPopup: React.FC = () => {
           <p className={styles.stepText}>Подойдите к кассе и покажите корзину кассиру</p>
         </div>
       </div>
-      
-      <div className={styles.footer}>
-        <button className={styles.ctaButton}>
-          Открыть корзину
-        </button>
-      </div>
     </div>
   );
 
