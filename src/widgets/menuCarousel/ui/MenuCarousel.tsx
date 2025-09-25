@@ -67,7 +67,7 @@ export const MenuCarousel: React.FC = () => {
               onClick={() => navigate(`/dish/${item.id}`)}
             >
               <img src={item.img} alt={item.name} className={styles.carouselImg} />
-              <div className={styles.carouselName}>{item.name}</div>
+              <div className={styles.carouselName} style={{textAlign: "center", margin: "0 auto"}}>{item.name}</div>
               <div className={styles.carouselPrice}>{item.price}₽</div>
 
               {/* 🔽 Всегда прижимаем кнопку/счётчик вниз */}

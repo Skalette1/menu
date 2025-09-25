@@ -14,7 +14,7 @@
 .menuCard {
   position: relative;
   height: 260px;
-  border-radius: 1rem;
+  border-radius: 30px;
   overflow: hidden;
   background-size: cover;
   background-position: center;
@@ -23,14 +23,13 @@
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 
-  /* затемнение картинки */
-  background-color: rgba(0, 0, 0, 0.45); /* уровень затемнения */
-  background-blend-mode: darken; /* затемнение только картинки */
+  background-color: rgba(0, 0, 0, 0.45); 
+  background-blend-mode: darken;
 }
 
 .menuCard:hover {
   transform: translateY(-5px);
-  background-color: rgba(0, 0, 0, 0.6); /* чуть темнее при hover */
+  background-color: rgba(0, 0, 0, 0.6); 
 }
 
 .menuCard h3 {
@@ -42,7 +41,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff; /* текст всегда белый */
+  color: #fff; 
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
   z-index: 1;
   text-align: center;

@@ -99,7 +99,7 @@ export const PRODUCTS: Product[] = [
     name: "Цезарь",
     category: "salads",
     price: 400,
-    description: "Цезарь с хрустящими гренками и соусом на основе анчоусов.",
+    description: "Цезарь с хрустящими гренками и соусом на основе ан",
   },
   {
     id: "s2",

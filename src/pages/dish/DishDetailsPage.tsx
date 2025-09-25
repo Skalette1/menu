@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { PRODUCTS } from "../menu/model/menuPage";
 import styles from "./DishDetailsPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,13 +57,15 @@ export const DishDetailsPage: React.FC = () => {
   return (
     <div className={styles.page}>
       <ScrollToTopPage />
-      <button onClick={() => navigate(-1)} className={styles.back}>
+      <Link to="/drinks">
+      <button className={styles.back}>
         <img src={
           backArrowPng
         } alt="backArrowPng"
         className={styles.backArrowImg}
          />
       </button>
+      </Link>
       {img && <img src={img} alt={product.name} className={styles.img} />}
       <div className={styles.infoCard}>
         <h1 className={styles.title}>{product.name}</h1>
