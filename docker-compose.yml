@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  directus:
+    image: directus/directus:latest
+    container_name: directus
+    depends_on:
+      - db
+    ports:
+      - "8055:8055"
+    environment:
+      # Core
+      KEY: ${DIRECTUS_KEY:-supersecretkey}
+      SECRET: ${DIRECTUS_SECRET:-supersecretsecret}
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL:-http://localhost:8055}
+
+      # Admin bootstrap
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:-admin1234}
+
+      # Database
+      DB_CLIENT: pg
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB:-directus}
+      DB_USER: ${POSTGRES_USER:-directus}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-directus}
+
+      # CORS (adjust origins as needed)
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: ${DIRECTUS_CORS_ORIGIN:-http://localhost:5173}
+
+      # File storage (local)
+      STORAGE_LOCATIONS: local
+      STORAGE_LOCAL_DRIVER: local
+      STORAGE_LOCAL_ROOT: /directus/uploads
+
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    container_name: directus_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-directus}
+      POSTGRES_USER: ${POSTGRES_USER:-directus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-directus}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  directus_uploads:
+  directus_extensions:
+  postgres_data:
+
+

@@ -222,7 +222,6 @@ export const MenuPage: React.FC<{
         </div>
       </div>
 
-      {/* Full menu sections */}
       <div className={styles.menuContainer} style={{ maxWidth: 1100, margin: "0 auto", padding: 8 }}>
         <section id="drinks" ref={drinksRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.drinks}</h3>
