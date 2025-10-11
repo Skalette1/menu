@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { PRODUCTS } from "../menu/model/menuPage";
+import { PRODUCTS, fetchProducts } from "../menu/model/menuPage";
 import styles from "./DishDetailsPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, setCount, removeItem } from "../../shared/model/cartSlice";
@@ -15,6 +15,7 @@ import rizotto from "../../../public/rizotto.png";
 import saladPng from "../../../public/salad2.png";
 import caesar from "../../../public/caesar.webp";
 import backArrowPng from "../../../public/Arrow 2.png";
+import ProgressiveImage from "../../shared/ui/ProgressiveImage";
 import { ScrollToTopPage } from "../../shared/ui/scrollTopPage/ScrollTopPage";
 
 export const DishDetailsPage: React.FC = () => {
@@ -23,7 +24,27 @@ export const DishDetailsPage: React.FC = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((s: RootState) => s.cart.items);
 
-  const product = PRODUCTS.find((p) => p.id === id);
+  const [product, setProduct] = React.useState<any | null>(PRODUCTS.find((p) => p.id === id) || null);
+  const [productsList, setProductsList] = React.useState<any[]>(PRODUCTS || []);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    // if we already have both product and productsList from fallback, skip
+    if ((product && productsList.length > 0) || !id) return;
+    setLoading(true);
+    fetchProducts()
+      .then((list) => {
+        setProductsList(list || []);
+        const found = list.find((p) => String(p.id) === String(id));
+        setProduct(found || null);
+      })
+      .catch((e) => setError(String(e.message || e)))
+      .finally(() => setLoading(false));
+  }, [id, product, productsList.length]);
+
+  if (loading) return <div>Загрузка...</div>;
+  if (error) return <div>Ошибка: {error}</div>;
   if (!product) return <div>Товар не найден</div>;
 
   const currentCount =
@@ -52,7 +73,7 @@ export const DishDetailsPage: React.FC = () => {
     s4: saladPng,
   };
 
-  const img = IMAGES[product.id] || "";
+  const img = product.featured_image ? `/assets/${product.featured_image}` : (IMAGES[product.id] || "");
 
   return (
     <div className={styles.page}>
@@ -124,48 +145,50 @@ export const DishDetailsPage: React.FC = () => {
       <div className={styles.recommendedSection}>
         <h3>Покупают <span style={{color: '#AE9E7E'}}>вместе</span></h3>
         <div className={styles.recommendedList}>
-          {PRODUCTS.filter(
-            (p) => p.category === product.category && p.id !== product.id,
-          )
+          {productsList
+            .filter((p) => p.category === product.category && String(p.id) !== String(product.id))
             .slice(0, 3)
-            .map((p) => (
-              <div
-                key={p.id}
-                className={styles.recCard}
-                onClick={() => (window.location.hash = `#/dish/${p.id}`)}
-              >
-                <img
-                  src={IMAGES[p.id] || ""}
-                  alt={p.name}
-                  className={styles.recImg}
-                />
-                <div className={styles.recCardBottom}>
-                <div className={styles.recName}>{p.name}</div>
-                <div className={styles.recFooter}>
-                  <div className={styles.recPrice}>{p.price}₽</div>
-                  <button
-                    className={styles.recAdd}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch(
-                        addItem({
-                          item: {
-                            id: p.id,
-                            name: p.name,
-                            img: IMAGES[p.id] || "",
-                            price: p.price,
-                          },
-                          count: 1,
-                        }),
-                      );
-                    }}
-                  >
-                    +
-                  </button>
+            .map((p) => {
+              const recImg = p.featured_image ? `http://localhost:8055/assets/${p.featured_image}` : (IMAGES[p.id] || "");
+              return (
+                <div
+                  key={p.id}
+                  className={styles.recCard}
+                  onClick={() => navigate(`/dish/${p.id}`)}
+                >
+                  <ProgressiveImage
+                    src={recImg}
+                    alt={p.name}
+                    className={styles.recImg}
+                  />
+                  <div className={styles.recCardBottom}>
+                    <div className={styles.recName}>{p.name}</div>
+                    <div className={styles.recFooter}>
+                      <div className={styles.recPrice}>{p.price}₽</div>
+                      <button
+                        className={styles.recAdd}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(
+                            addItem({
+                              item: {
+                                id: p.id,
+                                name: p.name,
+                                img: recImg,
+                                price: p.price,
+                              },
+                              count: 1,
+                            }),
+                          );
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       </div>
     </div>

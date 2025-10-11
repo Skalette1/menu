@@ -1,6 +1,7 @@
 import React from "react";
-import { PRODUCTS } from "../model/menuPage";
+import { PRODUCTS, fetchProducts } from "../model/menuPage";
 import styles from "./MenuPage.module.css";
+import ProgressiveImage from "../../../shared/ui/ProgressiveImage";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, setCount } from "../../../shared/model/cartSlice";
 import { GoToCartButton } from "../../../shared/ui/goToCartButton/GoToCartButton";
@@ -54,61 +55,68 @@ const MenuCardControls: React.FC<{
   counts: { [id: string]: number };
   setCounts: React.Dispatch<React.SetStateAction<{ [id: string]: number }>>;
   dispatch: any;
-}> = ({ item, counts, setCounts, dispatch }) => {
+  getImageFor: (item: any) => string;
+}> = ({ item, counts, setCounts, dispatch, getImageFor }) => {
   const isInCart = counts[item.id] && counts[item.id] > 0;
+  const img = getImageFor(item);
 
+  // slot preserves layout; inside it we switch between + and counter
   if (!isInCart) {
     return (
-      <button
-        className={styles.menuAddBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          setCounts((c) => ({ ...c, [item.id]: 1 }));
-          dispatch(
-            addItem({ item: { ...item, img: IMAGES[item.id], id: item.id }, count: 1 }),
-          );
-        }}
-      >
-        <span className={styles.menuPlusIcon}>+</span>
-      </button>
+      <div className={styles.controlSlot}>
+        <button
+          className={styles.menuAddBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            setCounts((c) => ({ ...c, [item.id]: 1 }));
+            dispatch(
+              addItem({ item: { ...item, img, id: item.id }, count: 1 }),
+            );
+          }}
+        >
+          <span className={styles.menuPlusIcon}>+</span>
+        </button>
+      </div>
     );
   }
 
   return (
-    <div className={styles.menuCounterWrapper}>
-      <button
-        className={styles.menuCounterBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          setCounts((c) => {
-            const newCount = (c[item.id] || 1) - 1;
-            if (newCount <= 0) {
-              const copy = { ...c };
-              delete copy[item.id];
-              dispatch(removeItem(item.id));
-              return copy;
-            }
-            dispatch(setCount({ id: item.id, count: newCount }));
-            return { ...c, [item.id]: newCount };
-          });
-        }}
-      >
-        -
-      </button>
-      <span className={styles.menuCounter}>{counts[item.id]}</span>
-      <button
-        className={styles.menuCounterBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          setCounts((c) => {
-            const newCount = (c[item.id] || 0) + 1;
-            dispatch(setCount({ id: item.id, count: newCount }));
-            return { ...c, [item.id]: newCount };
-          });
-        }}
-      >
-        +
-      </button>
+    <div className={styles.controlSlot}>
+      <div className={styles.menuCounterWrapper}>
+        <button
+          className={styles.menuCounterBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            setCounts((c) => {
+              const newCount = (c[item.id] || 1) - 1;
+              if (newCount <= 0) {
+                const copy = { ...c };
+                delete copy[item.id];
+                dispatch(removeItem(item.id));
+                return copy;
+              }
+              dispatch(setCount({ id: item.id, count: newCount }));
+              return { ...c, [item.id]: newCount };
+            });
+          }}
+        >
+          -
+        </button>
+        <span className={styles.menuCounter}>{counts[item.id]}</span>
+        <button
+          className={styles.menuCounterBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            setCounts((c) => {
+              const newCount = (c[item.id] || 0) + 1;
+              dispatch(setCount({ id: item.id, count: newCount }));
+              return { ...c, [item.id]: newCount };
+            });
+          }}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };
@@ -119,6 +127,9 @@ export const MenuPage: React.FC<{
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const [counts, setCounts] = React.useState<{ [id: string]: number }>({});
+  const [products, setProducts] = React.useState<typeof PRODUCTS>(PRODUCTS);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -150,6 +161,25 @@ export const MenuPage: React.FC<{
     setCounts(map);
   }, [cartItems]);
 
+  // load products from Directus on mount
+  React.useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchProducts()
+      .then((res) => {
+        if (!cancelled) setProducts(res);
+      })
+      .catch((e: any) => {
+        if (!cancelled) setError(String(e.message || e));
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // when mounted, if category prop provided (via route) scroll to that section
   React.useEffect(() => {
     const cat = category;
@@ -166,16 +196,22 @@ export const MenuPage: React.FC<{
   }, [category, location.pathname]);
 
   // Функция для рендера карточек (DRY принцип)
+  const getImageFor = (item: any) => {
+    // Prefer Directus uploaded image via featured_image id (use relative path so dev server proxy can forward it)
+    if (item.featured_image) return `/assets/${item.featured_image}`;
+    return IMAGES[item.id] || "";
+  };
+
   const renderMenuCards = (category: string) => (
     <div className={styles.menu}>
-      {PRODUCTS.filter((p) => p.category === category).map((item) => (
+      {products.filter((p) => p.category === category).map((item) => (
         <div
           key={item.id}
           className={styles.menuCard}
           onClick={() => (window.location.hash = `#/dish/${item.id}`)}
         >
-          <div className={styles.menuImgWrapper}>
-            <img src={IMAGES[item.id]} alt={item.name} className={styles.menuImg} />
+            <div className={styles.menuImgWrapper}>
+            <ProgressiveImage src={getImageFor(item)} alt={item.name} />
           </div>
 
           <div className={styles.menuName}>{item.name}</div>
@@ -186,7 +222,8 @@ export const MenuPage: React.FC<{
             item={item} 
             counts={counts} 
             setCounts={setCounts} 
-            dispatch={dispatch} 
+            dispatch={dispatch}
+            getImageFor={getImageFor}
           />
         </div>
       ))}
@@ -199,7 +236,6 @@ export const MenuPage: React.FC<{
       <MenuHeader />
       <MenuCarousel />
 
-      {/* Top category navigation (moved filters from carousel) */}
       <div className={styles.stickyNav}>
         <div className={styles.filters}>
           {[
@@ -225,22 +261,22 @@ export const MenuPage: React.FC<{
       <div className={styles.menuContainer} style={{ maxWidth: 1100, margin: "0 auto", padding: 8 }}>
         <section id="drinks" ref={drinksRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.drinks}</h3>
-          {renderMenuCards("drinks")}
+          {loading ? <div>Загрузка...</div> : error ? <div>Ошибка: {error}</div> : renderMenuCards("drinks")}
         </section>
 
         <section id="desserts" ref={dessertsRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.desserts}</h3>
-          {renderMenuCards("desserts")}
+          {loading ? <div>Загрузка...</div> : error ? <div>Ошибка: {error}</div> : renderMenuCards("desserts")}
         </section>
 
         <section id="hot" ref={hotRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.hot}</h3>
-          {renderMenuCards("hot")}
+          {loading ? <div>Загрузка...</div> : error ? <div>Ошибка: {error}</div> : renderMenuCards("hot")}
         </section>
 
         <section id="salads" ref={saladsRef} style={{ marginBottom: 24 }}>
           <h3>{CATEGORY_LABELS.salads}</h3>
-          {renderMenuCards("salads")}
+          {loading ? <div>Загрузка...</div> : error ? <div>Ошибка: {error}</div> : renderMenuCards("salads")}
         </section>
       </div>
       <GoToCartButton />

@@ -4,122 +4,85 @@ export interface Product {
   category: "drinks" | "desserts" | "hot" | "salads";
   price: number;
   description?: string;
+  slug?: string;
+  featured_image?: string;
 }
 
-export const PRODUCTS: Product[] = [
-  {
-    id: "d1",
-    name: "Эспрессо",
-    category: "drinks",
-    price: 200,
-    description: "Крепкий эспрессо с плотной пенкой и нотками шоколада.",
-  },
-  {
-    id: "d2",
-    name: "Капучино",
-    category: "drinks",
-    price: 250,
-    description: "Классический капучино: эспрессо с воздушной молочной пеной.",
-  },
-  {
-    id: "d3",
-    name: "Латте",
-    category: "drinks",
-    price: 270,
-    description:
-      "Мягкий латте с тёплым молочным вкусом и лёгкой кофейной горчинкой.",
-  },
-  {
-    id: "d4",
-    name: "Мокко",
-    category: "drinks",
-    price: 220,
-    description: "Мокко со сливками и шоколадной ноткой.",
-  },
-  {
-    id: "ds1",
-    name: "Чизкейк",
-    category: "desserts",
-    price: 300,
-    description: "Нежный чизкейк на сливочной основе с ягодным соусом.",
-  },
-  {
-    id: "ds2",
-    name: "Шоколадный торт",
-    category: "desserts",
-    price: 320,
-    description: "Интенсивный шоколадный торт с темной глазурью.",
-  },
-  {
-    id: "ds3",
-    name: "Мороженое",
-    category: "desserts",
-    price: 180,
-    description: "Домашнее мороженое из сливок с натуральным вкусом.",
-  },
-  {
-    id: "ds4",
-    name: "Пирожное",
-    category: "desserts",
-    price: 350,
-    description: "Изысканное пирожное с хрустящей основой и кремовой начинкой.",
-  },
-  {
-    id: "h1",
-    name: "Паста",
-    category: "hot",
-    price: 650,
-    description: "Паста аль денте с соусом на основе томатов и свежих трав.",
-  },
-  {
-    id: "h2",
-    name: "Бифстроганов",
-    category: "hot",
-    price: 1200,
-    description: "Говяжий бифстроганов с кремовым соусом и грибами.",
-  },
-  {
-    id: "h3",
-    name: "Ризотто",
-    category: "hot",
-    price: 700,
-    description:
-      "Ризотто с грибами: рис карнороли, белые грибы, масло оливковое, овощной бульон, чеснок, масло сливочное, сыр дор блю, сыр грана падано, соль, перец, петрушка, базилик, трюфельный крем, тимьян.",
-  },
-  {
-    id: "h4",
-    name: "Курица в соусе",
-    category: "hot",
-    price: 800,
-    description:
-      "Курица, приготовленная в ароматном сливочном соусе с травами.",
-  },
-  {
-    id: "s1",
-    name: "Цезарь",
-    category: "salads",
-    price: 400,
-    description: "Цезарь с хрустящими гренками и соусом на основе ан",
-  },
-  {
-    id: "s2",
-    name: "Греческий салат",
-    category: "salads",
-    price: 350,
-    description: "Свежие овощи, оливки и сыр фета с лёгкой заправкой.",
-  },
-  {
-    id: "s3",
-    name: "Овощной микс",
-    category: "salads",
-    price: 320,
-    description: "Сезонный овощной салат с травами и оливковым маслом.",
-  },
-  {
-    id: "s4",
-    name: "Салат с тунцом",
-    category: "salads",
-    price: 300,
-    description: "Салат с тунцом, яйцом и свежими овощами.",
-  },
-];
+/**
+ * Fallback empty PRODUCTS constant kept for backward compatibility.
+ * Prefer using `fetchProducts()` to load from Directus.
+ */
+export const PRODUCTS: Product[] = [];
+
+type DirectusResponse = {
+  data: Array<Record<string, any>>;
+};
+
+function parseCategory(item: Record<string, any>): Product['category'] {
+  // prioritize explicit fields if present
+  const allowed = ["drinks", "desserts", "hot", "salads"] as const;
+  const maybe = (item?.category ?? item?.type ?? item?.section ?? item?.group) as any;
+  if (maybe) {
+    const m = String(maybe).toLowerCase();
+    if (allowed.includes(m as any)) return m as Product['category'];
+  }
+
+  const title = String(item?.title || '').toLowerCase();
+  const slug = String(item?.slug || '').toLowerCase();
+  const body = String(item?.body || '').toLowerCase();
+  const text = `${title} ${slug} ${body}`;
+
+  // explicit slug-based mapping (most reliable)
+  const slugDesserts = ['cheesecake', 'shokoladniy-tort', 'morozhenoe', 'pirozhnoe', 'cheesecake', 'tort'];
+  const slugDrinks = ['espresso', 'kapuchino', 'latte', 'mokko', 'americano', 'coffe', 'coffee', 'kapuchino'];
+  const slugSalads = ['caesar', 'salad', 'salat', 'salat-s-tuncem', 'salat-s-tuncom'];
+  const slugHot = ['pasta', 'rizotto', 'risotto', 'hot', 'bifstroganov', 'kurica'];
+
+  if (slug && slugDesserts.some((s) => slug.includes(s))) return 'desserts';
+  if (slug && slugDrinks.some((s) => slug.includes(s))) return 'drinks';
+  if (slug && slugSalads.some((s) => slug.includes(s))) return 'salads';
+  if (slug && slugHot.some((s) => slug.includes(s))) return 'hot';
+
+  const dessertsKeywords = ['dessert', 'cake', 'cheesecake', 'tort', 'шоколад', 'чизкейк', 'пирожн', 'морожен', 'мороженое', 'десерт', 'торт', 'пирожное'];
+  const saladsKeywords = ['salad', 'salat', 'caesar', 'цезарь', 'салат', 'тунец', 'овощ', 'овощной'];
+  const hotKeywords = ['pasta', 'risotto', 'rizotto', 'паста', 'ризотто', 'горяч', 'блюд', 'курица'];
+  const drinksKeywords = ['coffee', 'espresso', 'latte', 'cappu', 'капуч', 'латте', 'эспрессо', 'мокко', 'americano', 'кофе', 'капучино'];
+
+  for (const k of dessertsKeywords) if (text.includes(k)) return 'desserts';
+  for (const k of saladsKeywords) if (text.includes(k)) return 'salads';
+  for (const k of hotKeywords) if (text.includes(k)) return 'hot';
+  for (const k of drinksKeywords) if (text.includes(k)) return 'drinks';
+
+  // Less aggressive fallback: classify as 'hot' if price large, otherwise 'drinks'
+  const price = Number(item?.price ?? 0);
+  if (price && price >= 600) return 'hot';
+
+  return 'drinks';
+}
+
+/**
+ * Load products from a Directus instance.
+ * Default base URL is http://localhost:8055.
+ * Returns an array of Product mapped from directus `items/cards`.
+ */
+export async function fetchProducts(baseUrl = ''): Promise<Product[]> {
+  const url = baseUrl ? `${baseUrl.replace(/\/$/, '')}/items/cards` : `/items/cards`;
+  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch products from ${url}: ${res.status} ${res.statusText}`);
+  }
+  const json = (await res.json()) as DirectusResponse;
+  const items = Array.isArray(json?.data) ? json.data : [];
+  return items.map((item) => {
+    const price = item.price != null ? Number(item.price) : 0;
+    return {
+      id: String(item.id ?? item._id ?? ""),
+      name: item.title || item.name || item.slug || "",
+      category: parseCategory(item),
+      price: Number.isFinite(price) ? price : 0,
+      description: item.body || item.description || undefined,
+      slug: item.slug || undefined,
+      featured_image: item.featured_image || undefined,
+    } as Product;
+  });
+}

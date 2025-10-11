@@ -84,6 +84,11 @@
   flex: 0 0 auto;
 }
 
+/* reserve space at bottom so controls don't overlap name/price */
+.carouselCard {
+  padding-bottom: 8px; /* minimal space for controls */
+}
+
 .carouselBottom {
   display: flex;
   justify-content: center;
@@ -93,6 +98,14 @@
   padding: 0 12px 12px 12px;
   box-sizing: border-box;
   flex-shrink: 0;
+}
+
+/* anchor controls to the bottom of the card so they never overlap content above */
+.carouselBottom {
+  margin-top: auto;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-bottom: 6px;
 }
 
 .carouselImg {
@@ -114,6 +127,13 @@
   margin-right: auto;
   letter-spacing: 1px;
   width: calc(100% - 24px);
+  min-height: 44px; /* reserve space so title is always visible */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* allow up to 2 lines */
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .carouselPrice {
@@ -132,15 +152,13 @@
   gap: 10px;
   justify-content: center;
   width: auto;
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
+  position: relative; /* in-flow inside .carouselBottom */
   z-index: 2;
-  background: #2d3748;
+  background: rgba(45,57,72,0.98);
   border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  padding: 6px 14px;
-  margin: 0 !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  padding: 6px 12px;
+  margin: 0 0 0 8px !important;
 }
 
 .carouselCounterBtn {
@@ -174,9 +192,7 @@
 }
 
 .carouselAddBtn {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
+  position: relative;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -287,6 +303,7 @@
     line-height: 1.2 !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
   }
@@ -302,8 +319,7 @@
   }
 
   .carouselCounterWrapper {
-    bottom: 6px !important;
-    right: 6px !important;
+    /* now in-flow inside .carouselBottom */
     padding: 4px 8px !important;
   }
 
@@ -319,8 +335,6 @@
   }
 
   .carouselAddBtn {
-    bottom: 6px !important;
-    right: 6px !important;
     width: 28px !important;
     height: 28px !important;
   }
@@ -399,5 +413,21 @@
     overflow: hidden !important;
     padding: 0 !important;
     justify-content: center !important;
+    align-items: center;
+  }
+
+  /* cap card width on desktop and make image scale nicely */
+  .carouselCard {
+    min-width: 220px;
+    width: 220px;
+    max-width: 260px;
+    min-height: 0; /* allow card to size to content */
+    height: auto;
+  }
+
+  .carouselImg {
+    height: 180px;
+    max-height: 220px;
+    object-fit: cover;
   }
 }

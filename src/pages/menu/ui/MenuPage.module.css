@@ -20,6 +20,7 @@
   margin: 0 auto 12px auto;
   transition: border 0.2s, box-shadow 0.2s;
   position: relative; /* для позиционирования кнопок */
+  padding-bottom: 48px; /* reserve space for controls to avoid overlap */
 }
 
 .menuCard:hover {
@@ -76,12 +77,12 @@
 }
 
 /* Кнопка добавления - АБСОЛЮТНОЕ ПОЗИЦИОНИРОВАНИЕ */
+
 .menuAddBtn {
-  position: absolute;
-  bottom: 1px;
-  right: 4px;
-  width: 32px;
-  height: 32px;
+  /* Positioned by .controlSlot (which is absolute). Keep this element centered inside that slot */
+  position: relative;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #2f3a4c;
   color: #fff;
@@ -96,6 +97,21 @@
   z-index: 2;
 }
 
+/* Контейнер для кнопки/счётчика: резервируем одинаковую область, чтобы при смене не было сдвига */
+.controlSlot {
+  /* anchor for add-button / counter - absolute on the card, children are centered inside */
+  position: absolute;
+  bottom: 12px; /* sits within reserved padding-bottom */
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50; /* raise above possible overlapping elements */
+  /* allow children (counter) to grow without breaking layout */
+  min-width: 36px;
+  min-height: 36px;
+}
+
 .menuAddBtn:hover {
   transform: scale(1.1);
   background: #1e293b;
@@ -107,16 +123,15 @@
 }
 
 .menuCounterWrapper {
-  position: absolute;
-  bottom: 1px;
-  right: 4px;
-  display: flex;
+  /* center inside .controlSlot rather than absolutely positioning itself */
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 1px; 
+  gap: 6px;
   background: #1e293b;
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  padding: 6px 14px;
+  padding: 4px 6px;
   z-index: 2;
 }
 
@@ -124,15 +139,15 @@
   background: transparent;
   border: none;
   border-radius: 6px;
-  padding: 1px 6px; /* уменьшил padding */
-  font-size: 1rem; /* уменьшил размер */
+  padding: 1px 6px; 
+  font-size: 0.95rem;
   color: #ffffff;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 28px;
+  min-width: 24px;
   flex-shrink: 0;
 }
 
@@ -141,7 +156,7 @@
 }
 
 .menuCounter {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   text-align: center;
   color: #ffffff;
@@ -165,31 +180,27 @@
   }
   
   .menuAddBtn {
-    width: 36px;
-    height: 36px;
-    font-size: 1.3rem;
-  bottom: 0px;
-  right: 2px;
+    width: 34px;
+    height: 34px;
+    font-size: 1.15rem;
   }
   
   .menuCounterWrapper {
-  bottom: 0px;
-  right: 2px;
-    gap: 3px;
-    padding: 1px 2px;
+    gap: 5px;
+    padding: 3px 5px;
   }
   
   .menuCounterBtn {
-    min-width: 32px;
-    height: 32px;
-    padding: 4px 8px;
-    font-size: 1.1rem;
+    min-width: 28px;
+    height: 28px;
+    padding: 3px 6px;
+    font-size: 1.05rem;
   }
   
   .menuCounter {
-    min-width: 24px;
-    font-size: 1.1rem;
-    padding: 0 6px;
+    min-width: 20px;
+    font-size: 1.05rem;
+    padding: 0 4px;
   }
 }
 
@@ -210,31 +221,27 @@
   }
   
   .menuAddBtn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.4rem;
-    bottom: 12px;
-    right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
   }
   
   .menuCounterWrapper {
-    bottom: 12px;
-    right: 12px;
-    gap: 8px;
-    padding: 6px 8px;
+    gap: 6px;
+    padding: 4px 6px;
   }
   
   .menuCounterBtn {
-    min-width: 36px;
-    height: 36px;
-    padding: 6px 10px;
-    font-size: 1.2rem;
+    min-width: 30px;
+    height: 30px;
+    padding: 4px 8px;
+    font-size: 1.05rem;
   }
   
   .menuCounter {
-    min-width: 28px;
-    font-size: 1.2rem;
-    padding: 0 8px;
+    min-width: 22px;
+    font-size: 1.05rem;
+    padding: 0 6px;
   }
 }
 

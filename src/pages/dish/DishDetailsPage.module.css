@@ -124,17 +124,21 @@
   gap: 12px;
   margin-top: 12px;
   justify-content: center;
+  align-items: stretch; /* ensure cards have equal height in a row */
 }
 
 .recCard {
-  height: 232px;
   background: white;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* push footer to bottom */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   flex: 0 0 auto;
+  width: 220px; /* fixed card width for consistent layout */
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .recImg {
@@ -154,6 +158,10 @@
 
 .recCardBottom {
   padding: .15rem 0.4rem;
+  min-height: 72px; /* keep bottom area uniform */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .recFooter {
